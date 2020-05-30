@@ -39,11 +39,6 @@ s = 0.5 * (a + b + c)
 
 area = (s * ((s - a) * (s-b) * (s-c)))**0.5
 
-
-
-#Run this equation
-#s(s−a)(s−b)(s−c)‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
 ################################################
 # Test output
 # Student should not change this code.
