@@ -3,7 +3,8 @@ Clone of 2048 game.
 
 run it here: http://www.codeskulptor.org/#user47_250GLUVpdk_8.py
 
-IMPORANT: Much of the TwentyFortyEight class had been refactored from other better solutions
+IMPORANT: Much of the TwentyFortyEight class had been refactored from other better solutions,
+mainly here (https://github.com/kitchjr/2048/blob/master/2048_1.0.py)
 as I am trying to focus on writing cleaner/better code. I feel that refactoring and understanding 
 better written code will help me break old thought patterns. shift_zeros_right() and merge() are 100% my work.
 """
