@@ -58,3 +58,10 @@ delete the files in the current directory.
 Your task is to write a command that recursively finds all HTML files in the folder and makes a zip with them. 
 Note that your command should work even if the files have spaces (hint: check -d flag for xargs)
 
+>> My work is shown under the 'sample_files' folder 
+
+
+5. (Advanced) Write a command or script to recursively find the most recently modified file in a directory. 
+   More generally, can you list all files by recency?
+   #Honestly I think this challenge is meant to be harder but you could easily do this with the command below and then piping to display the first line ¯\_(ツ)_/¯
+   >> ls -l -Rt
