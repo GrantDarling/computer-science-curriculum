@@ -23,23 +23,14 @@ A sample output would look like this
  marco. For ease of debugging you can write the code in a file marco.sh and (re)load the definitions 
  to your shell by executing source marco.sh.
 
- #!/bin/bash
-
-marco () {
-    dir=$(pwd) 
-    echo "$dir" > /Users/pro4/Desktop/CS-Cirriculum/001.5-The-Missing-Semester/week02/marco-path.txt
-}
-
-polo () {
-    dir="/Users/pro4/Desktop/CS-Cirriculum/001.5-The-Missing-Semester/week02/marco-path.txt"
-    cd $(cat $dir);
-}
+>> My work is shown under the 'marco-polo' folder
 
 3. Say you have a command that fails rarely. In order to debug it you need to capture its output but 
 it can be time consuming to get a failure run. Write a bash script that runs the following script until 
 it fails and captures its standard output and error streams to files and prints everything at the end. 
 Bonus points if you can also report how many runs it took for the script to fail.
 
+-------------------------------------------------------
  #!/usr/bin/env bash
 
  n=$(( RANDOM % 100 ))
@@ -51,5 +42,9 @@ Bonus points if you can also report how many runs it took for the script to fail
  fi
 
  echo "Everything went according to plan"
+-------------------------------------------------------
 
- My work is shown under the 'debug' folder
+ >> My work is shown under the 'debug' folder
+
+
+
