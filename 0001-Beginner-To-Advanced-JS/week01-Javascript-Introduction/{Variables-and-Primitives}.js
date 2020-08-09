@@ -52,3 +52,22 @@ console.log(isNaN("3")) //false
 
 var thing;
 console.log(typeof(thing)) //undefined
+
+
+/* 8. Quickly parse to number and check bolean value */
+
+console.log(Number("3")) //3
+console.log(+"4") //4
+
+Number("3") //3
++"2"; // 2
++"3.14"; // 3.14
++"2.3alkweflakwe"; // NaN 
++"w2.3alkweflakwe"; // NaN
+
+var greeting = "hi";
+var nothing = 0;
+
+!!greeting; // true
+!!nothing; // false
+
