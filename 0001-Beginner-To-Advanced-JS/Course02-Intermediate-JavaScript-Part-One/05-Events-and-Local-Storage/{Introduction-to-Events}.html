@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <button class="first_button" onclick="firstClick()">Click me first!</button>
+    <button class="second_button">Click me second!</button>
+    <button class="third_button">Click me third!</button>
+</body>
+<script>
+    // Option 1: - directly in HTML. Note that in your HTML, 
+    // the first button makes reference to a function called firstClick 
+    // in the onclick attribute
+    function firstClick() {
+        alert("you clicked the first button!");
+    }
+
+    // Option 2 - attach the function to the element
+    var secondButton = document.querySelector('.second_button');
+    secondButton.onclick = function () {
+        alert("you clicked the second button!");
+    }
+    // Option 3 - use addEventListener
+    var thirdButton = document.querySelector('.third_button');
+    thirdButton.addEventListener("click", function () {
+        alert("you clicked the third button!");
+    });
+
+
+
+    //Adding multiple event listeners
+
+    var buttons = document.getElementsByTagName("button");
+
+    // this will NOT work - what kind of error do you get?
+    buttons.addEventListener("click", function () {
+        alert("You just clicked a button");
+    });
+
+    // we have to add the event listener to each button
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+            alert('You just clicked on a button!');
+        });
+    }
+
+
+    /* 
+    In order to successfully remove an event listener, the callback that we pass 
+    in can't be an anonymous function. Let's clear out all the JavaScript and start 
+    from scratch. The code below should work; if you run it, event listeners will be 
+    added and then removed, so that nothing happens when you click on a button.
+    */
+
+    // In order to remove, we have to name our function before adding it instead of adding an anonymous function
+    function alertData() {
+        alert("You just clicked a button");
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", alertData);
+    }
+
+    // since we have named our function, we know which one to remove
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].removeEventListener("click", alertData);
+    }
+
+
+
+    //IMPORTANT: Always use 'DOMContentLoaded' or 'load' when writing javascript
+</script>
+
+</html>

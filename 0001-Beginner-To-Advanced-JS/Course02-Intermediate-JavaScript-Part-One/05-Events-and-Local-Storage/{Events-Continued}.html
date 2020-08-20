@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul> Ingredients
+        <li>Sugar</li>
+        <li>Milk</li>
+        <li>Eggs</li>
+        <li>Flour</li>
+        <li>Baking Soda</li>
+    </ul>
+</body>
+
+<script>
+
+    //Let's access each value using the event.target property!
+    var listItems = document.querySelectorAll('li');
+
+    for (var i = 0; i < listItems.length; i++) {
+        listItems[i].addEventListener("click", function (event) {
+            alert("You just clicked on " + event.target.innerText);
+        });
+    }
+
+
+    /* In order to alert the text of whatever element we looked for, 
+    we can either listen on the parent or listen on each child. Let's examine both options:
+    */
+
+    // OPTION 1: listening on the parent
+    var ul = document.querySelector("ul");
+
+    // how many event listeners?
+    ul.addEventListener("click", function (event) {
+        alert("You just clicked on " + event.target.innerText);
+    });
+
+    // OPTION 2: listening on the children
+    var listItems = document.getElementsByTagName("li");
+
+    // how many event listeners?
+    for (var i = 0; i < listItems.length; i++) {
+        listItems[i].addEventListener("click", function (event) {
+            alert("You just clicked on " + event.target.innerText);
+        });
+    }
+
+    /* 
+    So which one do you think is more efficient? If you guessed the one with 
+    fewer listeners, you are right! It's always best to have fewer event listeners, 
+    as they consume memory and are difficult to manage when there are many of them.
+    */
+
+</script>
+
+</html>

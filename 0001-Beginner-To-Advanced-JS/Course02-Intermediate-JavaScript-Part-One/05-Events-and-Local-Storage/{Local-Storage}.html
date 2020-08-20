@@ -1,0 +1,48 @@
+<!-- 
+    difference between localstorage and session storage
+
+    sessionStorage maintains a separate storage area for each given origin that's available for the duration of
+    the page session (as long as the browser is open, including page reloads and restores)
+
+    localStorage does the same thing, but persists even when the browser is closed and reopened.
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //set something into local storage 
+    localStorage.setItem("instructor", "Elie");
+    localStorage.setItem("favoriteNumber", 18);
+    localStorage.setItem("isHilarious", true);
+
+    //get something from local storage 
+    localStorage.getItem("instructor"); // "Elie"
+
+    //removing items from local storage
+    localStorage.removeItem("instructor");
+    localStorage.clear();
+
+    //adding objects 
+    var instructors = ["Elie", "Matt", "Tim"];
+
+    // 1. the JSON.stringify call converts the instructors array into a JSON string
+    localStorage.setItem("instructors", JSON.stringify(instructors));
+
+    // 2. JSON.parse converts the JSON string back into JavaScript (in this case, a valid array)
+    JSON.parse(localStorage.getItem("instructors"));
+
+
+</script>
+
+</html>

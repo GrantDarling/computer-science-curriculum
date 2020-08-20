@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DOM Exercise</title>
+    <style>
+        div {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+        }
+
+        .brown {
+            background-color: brown;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .purple {
+            background-color: purple;
+        }
+
+        .yellow {
+            background-color: yellow;
+        }
+
+        .car1 {
+            background-color: #8C9C12;
+        }
+
+        .car2 {
+            background-color: #1DA788;
+        }
+
+        .car1,
+        .car2 {
+            margin-left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="change_heading">Change Me!</h1>
+    SELECTED COLOR <span class="selected">None!</span>
+    <section>
+        <div class="brown"></div>
+        <div class="green"></div>
+        <div class="blue"></div>
+        <div class="yellow"></div>
+    </section>
+    <h2>Race!</h2>
+    <button>Start the race!</button>
+    <br>
+    <div class="car1"></div>
+    <br>
+    <div class="car2"></div>
+    <script src="script.js"></script>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        //change header to hello world
+        var header = document.querySelector("#change_heading");
+        header.innerText = "Hello World!"
+
+        //change selected color text to each color
+        var selected = document.querySelector(".selected");
+        var section = document.querySelector("section");
+        section.addEventListener("mouseover", function (event) {
+            selected.innerText = event.target.className;
+        })
+
+        var newDiv = document.createElement("div");
+        newDiv.classList.add('purple');
+        newDiv.style.backgroundColor = 'purple';
+        section.appendChild(newDiv);
+
+        //Make the two divs race.
+        var btn = document.querySelector("button");
+
+        //Race cars 
+        function race(car) {
+            var currentPosition = 0
+            var race = setInterval(function () {
+                var speed = Math.floor(Math.random() * 15) + 1
+                var finishLine = (window.innerWidth - car.offsetWidth)
+                //if first car finishes then reset 
+                if (currentPosition >= finishLine) {
+                    alert(`${car.className} wins!`);
+                    reset(car)
+                }
+                //Move car
+                currentPosition += speed;
+                car.style.marginLeft = currentPosition + 'px';
+            }, 100);
+            function reset(car) {
+                clearInterval(race);
+                location.reload();
+            }
+        }
+
+        var start = btn.addEventListener("click", function () {
+            btn.disabled = true
+            car1 = document.querySelector(".car1");
+            car2 = document.querySelector(".car2");
+            race(car1);
+            race(car2);
+        });
+    });
+
+</script>
+
+</html>
