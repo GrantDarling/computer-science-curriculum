@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Long list</title>
+</head>
+<body>
+  <div>
+    <a href="http://www.google.com" id="google">Google</a>
+  </div>
+  <div>
+    <a href="http://www.yahoo.com" id="yahoo">Yahoo</a>
+  </div>
+  <div>
+    <a href="http://www.bing.com" id="bing">Bing</a>
+  </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+
+      $("div").on('click', function(e) {
+        console.log("you clicked on a div!");
+      });
+
+      $("#google").on('click', function(e) {
+        e.preventDefault();
+      });
+
+      $("#yahoo").on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      $("#bing").on('click', function(e) {
+        e.stopPropagation();
+      });
+
+    });
+  </script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul> Ingredients
+        <li>Sugar</li>
+        <li>Milk</li>
+        <li>Eggs</li>
+        <li>Flour</li>
+        <li>Baking Soda</li>
+    </ul>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+</body>
+<script>
+    $(function () {
+        // pay CLOSE attention to the 2nd parameter
+        $("ul").on("click", "li", function (e) {
+            console.log("You just clicked on ", $(e.target).text());
+
+            //we could also use the 'this' keyword 
+            console.log("You just clicked on ", $(this).text());
+        });
+    });
+
+    
+</script>
+</html> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <button>Click me to make a new div!</button>
+  <div id="container"></div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(function(){
+      var count = 0;
+      $("button").on("click", function(){
+        var $newDiv = $("<div>", {
+          text: "div number " + count
+        });
+        count++;
+        $("#container").append($newDiv);
+      });
+      $("#container").on("click", "div", function(e){
+         console.log("You just clicked on ", $(e.target).text());
+      });
+    });
+  </script>
+</body>
+</html>
+
+preventDefault vs stopPropagation -->
+

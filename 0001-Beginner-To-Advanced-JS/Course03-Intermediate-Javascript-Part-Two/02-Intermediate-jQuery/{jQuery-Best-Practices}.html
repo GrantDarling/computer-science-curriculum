@@ -1,0 +1,154 @@
+<!-- Selector Caching -->
+
+<!-- As we start building larger applications with jQuery, we can make those applications more efficient by caching our selectors. 
+    What this means is that when we find elements in the DOM that we will be using repeatedly, we should find them once and save 
+    them to variables. Here's an example: -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+    <script>
+        $(function () {
+            var $container = $("#container");
+
+            $container.text("Hello World!");
+            $container.css('color', 'red');
+            $container.on("mouseenter", function (e) {
+                console.log("moused over!");
+            });
+
+            var $newDiv = $("<div>", {
+                text: "I am a div!",
+                css: {
+                    color: "green"
+                }
+            });
+
+            $container.append($newDiv);
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- In this case, jQuery only needs to go into the DOM and search for the div with an id of container one time. Since we store 
+        that jQuery object in a variable, we don't need to go back into the DOM and search for the element again on subsequent lines. 
+        We've also started our variable name with a dollar sign: this isn't required, but it's a nice convention. It indicates to the 
+        reader that the value inside of the variable is a jQuery object. -->
+
+
+
+<!-- Chaining -->
+
+<!-- One of the nicest things about jQuery is the ability to chain functions together. What this allows us to do is something like this: -->
+
+<script>
+    $("div").first().parent().find(".projects").css("color", "red").fadeOut(200);
+
+    // this can also be written as:
+
+    $("div")
+        .first()
+        .parent()
+        .find(".projects")
+        .css("color", "red")
+        .fadeOut(200);
+</script>
+
+<!-- jQuery Iterators -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Long list</title>
+</head>
+
+<body>
+    <ul>
+        Profit/Loss by Day
+        <li>-$10</li>
+        <li>$9</li>
+        <li>$1</li>
+        <li>$1</li>
+        <li>$0</li>
+        <li>$0</li>
+        <li>$10</li>
+        <li>-$7</li>
+        <li>-$6</li>
+        <li>-$9</li>
+    </ul>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+</body>
+
+</html>
+
+<script>
+    for (var i = 0; i < $("li").length; i++) {
+        console.log("Day " + i + ": " + $("li").eq(i).text());
+    }
+</script>
+<!-- each -->
+
+<!-- 
+    One way to refactor the code above is to use jQuery's built-in each function. each accepts a callback, and that callback 
+    can take two arguments: the first refers to the current index (analogous to i in the above example), and the second refers 
+    to the current element corresponding to that index.
+ -->
+
+<script>
+    $("li").each(function (i, el) {
+        console.log("Day " + i + ": " + $(el).text());
+    });
+</script>
+
+<!-- map -->
+
+<!-- 
+    jQuery has another iterator called map. The structure of this iterator is similar, but it does different things. map creates a 
+    new jQuery object that contains the return values from the callback inside of map. This is why, when using map, you need to be 
+    sure to always return something inside of the callback.
+ -->
+
+<script>
+    var summary = $("li").map(function (i, el) {
+        return $("<p>", {
+            text: "On day " + i + ", I earned " + $(el).text()
+        });
+    });
+    // summary is now a jQuery object which contains one p tag for each li
+
+    $("body").append(summary.get());
+// this appends the summary to the page.
+// The .get method turns summary, a jQuery object, into an array.
+// Without invoking get, you'll receive a TypeError.
+</script>
+
+<!-- filter -->
+
+<!-- 
+    There's a third iterator available to you in jQuery, called filter. Filter takes elements out of a jQuery object if they fail 
+    some test provided by the callback (very similar to the native filter array method). For example, suppose we wanted red text 
+    highlighting the days we lost money. Here's how we could achieve that effect using filter: 
+-->
+
+<script>
+    $("li").filter(function (i, el) {
+        return $(el).text()[0] === "-"
+        // returns true if the first character in the text is a minus sign,
+        // i.e. this checks whether or not the number is negative
+    }).css('color', 'red');
+// We've chained filter and css together; filter returns to us the
+// li's with negative numbers in them, and we then style those li's
+// to have red text.
+</script>
