@@ -1,3 +1,5 @@
 1. Take a course (or something) on debugging in:
     1. Chrome 
     2. VS Code (there is a course for this on frontend masters...)
+
+2. Make sure to finish the Javascript Iterators challenges!!
