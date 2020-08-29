@@ -10,3 +10,7 @@ Step 4: You should Now have a package.json file and a node_modules file. Open yo
     "test": "./node_modules/jasmine/bin/jasmine.js"
   },
 Step 5: Run this command in your current terminal: "npm run test-init". This will create a spec folder
+Step 6: Create a js file for your code
+Step 7: Export your functions with 'module.exports = 'function-name'; and import with var 'function-name' = require("../'main-js-path'");
+Step 8: Inside your 'spec ' folder, create a 'your-main-js-folder'.spec.js with your tests
+Step 9: You can now run the "npm test" command to run all your tests
