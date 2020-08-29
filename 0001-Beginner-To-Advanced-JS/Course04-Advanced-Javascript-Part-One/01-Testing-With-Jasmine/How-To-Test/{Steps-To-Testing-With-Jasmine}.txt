@@ -1,0 +1,12 @@
+GETTING STARTED
+Step 1: Create a folder for your project
+Step 2: Open terminal and enter this command to init npm in your project: "npm init -y"
+Step 3: Install Jasmine as a dev dependecie (could also install globally): "npm install --save-dev jasmine"
+
+CREATE A SCRIPT AND INIT
+Step 4: You should Now have a package.json file and a node_modules file. Open your package .json and add the following to your scripts 
+ "scripts": {
+    "test-init": "./node_modules/jasmine/bin/jasmine.js init",
+    "test": "./node_modules/jasmine/bin/jasmine.js"
+  },
+Step 5: Run this command in your current terminal: "npm run test-init". This will create a spec folder

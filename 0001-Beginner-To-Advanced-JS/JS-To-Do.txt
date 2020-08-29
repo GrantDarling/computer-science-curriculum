@@ -3,3 +3,5 @@
     2. VS Code (there is a course for this on frontend masters...)
 
 2. Make sure to finish the Javascript Iterators challenges!!
+
+3. Write more tests with Jasmine and figure out how to write integration tests

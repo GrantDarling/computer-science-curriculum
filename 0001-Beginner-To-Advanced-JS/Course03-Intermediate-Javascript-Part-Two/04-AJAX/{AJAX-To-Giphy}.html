@@ -23,12 +23,22 @@
         border: white solid 1px;
     }
 
-    .search #submitBtn {
+    .search #searchGiphy {
         background-color: black;
     }
 
     .search #deleteBtn {
         background-color: red;
+    }
+
+    .giphy {
+        width: 33%;
+        display: inline-block;
+    }
+
+    .giphy-title {
+        color: white;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     }
 </style>
 
@@ -49,48 +59,64 @@
     </div>
     <div class="search">
         <form id="giphy-form">
-            <input type="text">
-            <button id="submitBtn" type="submit">SEARCH GIPHY</button>
+            <input id="giphySearch" type="text">
+            <button id="searchGiphy" type="submit">SEARCH GIPHY</button>
             <button id="deleteBtn">DELETE</button>
         </form>
     </div>
-    <div class="giphy-container">
-        <img src="https://media0.giphy.com/media/hDqNW6fkTulEY/200.gif?cid=517363168n03xc054fb0c3etxvahy1s1tdcnvc7vz7f45oig&rid=200.gif" alt="">
-
-    </div>
+    <div id="giphy-container"></div>
 </body>
 <script>
 
-    $(function () {
-
-/*         $.get(
-            "http://api.giphy.com/v1/gifs/search",
-            {
-                q: "poo",
-                api_key: "pn41zpIruDIsuN40sUEWvGDx44pXtmMM"
-            }
-        ).then(function (res) {
-            console.log(res.data[24].images.fixed_height.url)
-        })
-
-        var $form = $("#giphy-form");
-
-        $form.on("submit", function (event) {
-            event.preventDefault();
-            //Do something
-            $form.trigger("reset");
-        }) */
-
+    var $getGiphy = function (search) {
         $.ajax({
             method: "GET",
-            url:"http://api.giphy.com/v1/gifs/search",
+            url: "http://api.giphy.com/v1/gifs/search",
             data: {
-                q: "balls",
+                q: search,
                 api_key: "pn41zpIruDIsuN40sUEWvGDx44pXtmMM"
             }
         }).then(function (res) {
             console.log(res.data[0].images.fixed_height.url)
+            var test = res.data[0].images.fixed_height.url
         })
+
+    }
+
+    $(function () {
+        //GRAB THE GIF ON SUBMIT
+        $("#searchGiphy").on("click", function (event) {
+            event.preventDefault()
+
+            //GRAB USER INPUT 
+            var search = $("#giphySearch").val()
+
+            $.ajax({
+                method: "GET",
+                url: "http://api.giphy.com/v1/gifs/search",
+                data: {
+                    q: search,
+                    api_key: "pn41zpIruDIsuN40sUEWvGDx44pXtmMM"
+                }
+            }).then(function (res) {
+                console.log(res.data[0].images.fixed_height.url)
+                $('<div>', {
+                class: 'giphy'
+            }).appendTo('#giphy-container').append($('<h4/>', {
+                class: 'giphy-title',
+                text: res.data[0].title,
+            })).append($('<img/>', {
+                class: 'giphy-img',
+                src: res.data[0].images.fixed_height.url,
+            }));
+
+            })
+        });
+
+        //DELETE GIFS
+        $("#deleteBtn").click(function() {
+            $("#giphy-container").empty()
+            });
 
     })
 </script>
