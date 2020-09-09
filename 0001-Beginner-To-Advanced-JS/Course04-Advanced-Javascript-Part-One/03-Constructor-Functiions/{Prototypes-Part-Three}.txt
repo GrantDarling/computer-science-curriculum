@@ -1,0 +1,10 @@
+/* 
+Let's imagine that we are building an application which allows users to play chess. What constructor functions would we need? 
+What kinds of prototype functions and properties would we need as well?
+*/
+
+
+//Constructor functions 
+// 1. construct pieces (piece type, function for movements, side (black or white), etc. etc.)
+// 2. construct players (name, )
+// 3. scoreboard 
