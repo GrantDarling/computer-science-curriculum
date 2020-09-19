@@ -65,13 +65,13 @@ let shapes = {
   }
 }
 
-function draw(shape) {
-  var keys = Object.keys(shape)
+function draw(obj) {
+  var keys = Object.keys(obj)
   var randomKey = keys[keys.length * Math.random() << 0];
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  shape[randomKey].draw();
-  currentShape = shape[randomKey].keyInput;
+  obj[randomKey].draw();
+  currentShape = obj[randomKey].keyInput;
 }
 
 function score(e) {
