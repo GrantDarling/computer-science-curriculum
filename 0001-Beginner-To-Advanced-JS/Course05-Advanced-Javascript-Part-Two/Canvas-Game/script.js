@@ -14,7 +14,6 @@ var canvas = document.getElementById("shapes-game"),
   width = canvas.scrollWidth,
   expectedKey = undefined,
   ctx = canvas.getContext("2d"),
-  expectedKeysMap = { white0: 38, red1: 40, red0: 37, white1: 39 },
   scoreSpan = document.getElementById("score-val"),
   miliseconds = 1000,
   currentScore = 0,
@@ -37,56 +36,49 @@ var drawTriangle = function (color, start, secondSide, thirdSide) {
   ctx.fill();
 };
 
+document.addEventListener("keydown", score);
 
-var drawWhiteSquare = function () {
-  currentShape = "ArrowRight";
-  drawSquare("white", [0, 50], 50, 50);
-};
-var drawRedSquare = function () {
-  currentShape = "ArrowDown";
-  drawSquare("red", [0, 600], 50, 50);
-};
-
-var drawWhiteTriangle = function () {
-  currentShape = "ArrowUp";
-  drawTriangle("white", [400, 400], [400, 500], [500, 500]);
-};
-
-var drawRedTriangle = function () {
-  currentShape = "ArrowLeft";
-  drawTriangle("red", [300, 300], [300, 400], [400, 400]);
-};
-
-//Make this an bject and add the keys here
-var drawShape = [
-  drawWhiteSquare,
-  drawRedSquare,
-  drawWhiteTriangle,
-  drawRedTriangle
-]
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  var random = Math.floor(Math.random() * 4)
-  drawShape[random]()
-
-  //key = drawShape[random][0]
+let shapes = {
+  whiteSquare: {
+    draw: function () {
+      drawSquare("white", [0, 50], 50, 50);
+    },
+    keyInput: "ArrowRight"
+  },
+  redSquare: {
+    draw: function () {
+      drawSquare("red", [0, 600], 50, 50);
+    },
+    keyInput: "ArrowDown"
+  },
+  redTriangle: {
+    draw: function () {
+      drawTriangle("red", [300, 300], [300, 400], [400, 400]);
+    },
+    keyInput: "ArrowLeft"
+  },
+  whiteTriangle: {
+    draw: function () {
+      drawTriangle("white", [400, 400], [400, 500], [500, 500]);
+    },
+    keyInput: "ArrowUp"
+  }
 }
 
-setInterval(draw, miliseconds);
-//score function
-//if key pressed then check if it matches the key function 
-// if it matches the key just drawn then 
+function draw(shape) {
+  var keys = Object.keys(shape)
+  var randomKey = keys[keys.length * Math.random() << 0];
 
-document.addEventListener("keydown", score);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  shape[randomKey].draw();
+  currentShape = shape[randomKey].keyInput;
+}
 
 function score(e) {
   if (e.code === currentShape) {
-    console.log("correct!");
     currentScore++;
     gameOver()
   } else {
-    console.log("Nope!")
     currentScore--;
   }
   scoreSpan.innerHTML = currentScore
@@ -95,16 +87,8 @@ function score(e) {
 function gameOver() {
   if (currentScore >= 10) {
     alert("You win!!!")
+    clearInterval(asyncDraw)
   }
 }
 
-function logKey(e) {
-  var textContent = ` ${e.code}`;
-  console.log(textContent);
-}
-
-
-
-//1. Finish the game
-//2. Add a docstring at the top
-//3. Make the top of the document a doc string
+var asyncDraw = setInterval(function () { draw(shapes) }, miliseconds);
