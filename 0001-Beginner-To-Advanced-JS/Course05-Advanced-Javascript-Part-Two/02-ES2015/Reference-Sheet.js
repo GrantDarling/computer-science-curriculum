@@ -124,9 +124,8 @@
     add(0) // 13 - CORRECT!
     add(10,10) // 20
 
-/* 5. Rest & Spread */
+/* 5. Rest */
 
-    // Rest
     // The '...variable' will take the sum of the rest of the arguments and put them into an array
 
     function data(a,b,...c){
