@@ -3,7 +3,7 @@ READ ME:
 
 Unfortunately, the remaining projects in this course require a library accessed only through the course 
 website sandbox. If you would like to play this game you can view it here: http://www.codeskulptor.org/?fbclid=IwAR1lyaKR-avHldmDzZW3Z2ljWmxJFNfacE0Ls2lYlJKh7KVYvzoklN7crG0#user47_NYuh0lQEm6_4.py
-If this link has been removed in the backend you can always play the game by going going here, removing the code and
+If this link has been removed in the backend you can always play the game by going here, removing the code and
 replacing it with my code: http://www.codeskulptor.org/
 
 Side Note: The instructors said to use global variables in this case.

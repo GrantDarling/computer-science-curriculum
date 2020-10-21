@@ -1,0 +1,15 @@
+1. Syntax:
+a < b
+Where < is the keyword to evaluate the subexpressions 'a' and 'b'
+
+2. Type Checking 
+both a and b must be type 'int' to be compared.
+the entire expression will result in a bool expression
+
+3. Evaluation Rules
+if a is less than type b then evaluate to true 
+
+
+
+
+The dates can be checked as a list with tuples of integers to represent dates.

@@ -8,7 +8,6 @@ website sandbox. If you would like to play this game you can view it here: http:
 If this link has been removed in the backend you can always play the game by going going here, removing the code and
 replacing it with my code: http://www.codeskulptor.org/
 
-Thanks for understanding :)
 '''
 
 import simplegui

@@ -9,25 +9,23 @@ with callbacks).
 */
 
 function firstPromise() {
-    return new Promise(function (resolve, reject) {
-        var x = Math.random();
-        if (x > 0.5) {
-            resolve(`Hooray! Your promise was resolved with value ${x}.`);
-        } else {
-            reject(`Oh no, your promise was rejected with value ${x}`);
-        }
-    });
+  return new Promise(function (resolve, reject) {
+    var x = Math.random();
+    if (x > 0.5) {
+      resolve(`Hooray! Your promise was resolved with value ${x}.`);
+    } else {
+      reject(`Oh no, your promise was rejected with value ${x}`);
+    }
+  });
 }
 
-
 firstPromise()
-    .then(function (data) {
-        return data;
-    })
-    .catch(function (error) {
-        return error;
-    });
-
+  .then(function (data) {
+    return data;
+  })
+  .catch(function (error) {
+    return error;
+  });
 
 /* 
 Promises and asynchronous code
@@ -40,33 +38,32 @@ We can mimic this behavior using a setTimeout. Let's see what this looks like, s
 */
 
 function secondPromise() {
-    return new Promise(function (resolve, reject) {
-        var timeToResolve = Math.random() * 5000;
-        var maxTime = 3000;
-        if (timeToResolve < maxTime) {
-            setTimeout(function () {
-                resolve(
-                    `Hooray! I completed your request after ${timeToResolve} milliseconds.`
-                );
-            }, timeToResolve);
-        } else {
-            setTimeout(function () {
-                reject(
-                    `Sorry, this is taking too long. Stopping after ${maxTime} milliseconds. Please try again.`
-                );
-            }, maxTime);
-        }
-    });
+  return new Promise(function (resolve, reject) {
+    var timeToResolve = Math.random() * 5000;
+    var maxTime = 3000;
+    if (timeToResolve < maxTime) {
+      setTimeout(function () {
+        resolve(
+          `Hooray! I completed your request after ${timeToResolve} milliseconds.`
+        );
+      }, timeToResolve);
+    } else {
+      setTimeout(function () {
+        reject(
+          `Sorry, this is taking too long. Stopping after ${maxTime} milliseconds. Please try again.`
+        );
+      }, maxTime);
+    }
+  });
 }
 
 secondPromise()
-    .then(function (data) {
-        console.log(data);
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-
+  .then(function (data) {
+    console.log(data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 
 /* Promises in jQuery */
 
@@ -76,39 +73,33 @@ like $.get, $.getJSON, or $.ajax, you can chain .then and .catch methods to the 
 */
 
 function getJokesAbout(term) {
-    return $.getJSON(`https://icanhazdadjoke.com/search?term=${term}`);
+  return $.getJSON(`https://icanhazdadjoke.com/search?term=${term}`);
 }
 
 getJokesAbout("spider")
-    .then(function (data) {
-        console.log("Here is our joke data!", data);
-    })
-    .catch(function (err) {
-        console.log("Oops, something went wrong", err);
-    });
-
+  .then(function (data) {
+    console.log("Here is our joke data!", data);
+  })
+  .catch(function (err) {
+    console.log("Oops, something went wrong", err);
+  });
 
 /* Promise.all */
 
 //The other nice thing about Promises is that you can wait for multiple promises to resolve with the Promise.all function
 
 function getJokesAbout(term) {
-    return $.getJSON(`https://icanhazdadjoke.com/search?term=${term}`);
+  return $.getJSON(`https://icanhazdadjoke.com/search?term=${term}`);
 }
 
 Promise.all([
-    getJokesAbout("spider"),
-    getJokesAbout("ghost"),
-    getJokesAbout("pizza")
+  getJokesAbout("spider"),
+  getJokesAbout("ghost"),
+  getJokesAbout("pizza"),
 ])
-    .then(function (data) {
-        console.log("Woah check out all this data", data);
-    })
-    .catch(function (err) {
-        console.log("Oops, something went wrong!");
-    });
-
-
-
-
-
+  .then(function (data) {
+    console.log("Woah check out all this data", data);
+  })
+  .catch(function (err) {
+    console.log("Oops, something went wrong!");
+  });
