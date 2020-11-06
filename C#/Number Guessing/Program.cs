@@ -7,30 +7,31 @@ namespace Number_Guessing
         static void Main(string[] args)
         {
             Random random = new Random();
-            Console.WriteLine("Guess A Number Between 1 and 10: ");
-            int mysteryNumber = random.Next(0, 11);
-            bool correct = false;
+            int randomNumber = random.Next(0, 11);
+            bool win = false;
 
-            while (correct == false)
+            Console.WriteLine("Guess A Number Between 1 and 10: ");
+
+            while (win == false)
             {
                 string guess = Console.ReadLine();
                 int intGuess = Int32.Parse(guess);
 
-                if (mysteryNumber == intGuess)
+                if (randomNumber == intGuess)
                 {
                     Console.WriteLine("Correct!");
-                    correct = true;
+                    win = true;
                 }
-                else if (mysteryNumber > intGuess)
+                else if (randomNumber > intGuess)
                 {
-                    Console.WriteLine("Higher...");
+                    Console.WriteLine("Too low! Guess higher...");
                 }
                 else
                 {
-                    Console.WriteLine("Lower...");
+                    Console.WriteLine("Too high! Guess lower...");
                 }
             }
-            Console.WriteLine($"number is {mysteryNumber}!");
+            Console.WriteLine($"number is {randomNumber}!");
         }
     }
 }
