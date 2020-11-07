@@ -1,1 +1,25 @@
 General brainstorming for new portfolio piece 
+
+
+
+// 1. Section on proper typig practices 
+https://www.ratatype.com/learn/
+
+// 2. Leaderboard 
+
+// 3. Main section (sub parts to practice)
+
+//   Scroll down to find next challenges and rankings
+https://www.typingtest.com/trainer/
+
+
+Need an image like this : https://www.typingtest.com/trainer/applet.html?course_url=course_descriptions/fl5_us_sr_touchtyping.xml&lesson_id=A001
+to show where your hands go
+// 4. Create design in adobe with colours to show how it works for each stage
+
+
+// 5. Create some sort of speedometer // accuracy meter to tell people where each medal is
+
+// 6. Figure out how to add ads and disable ad blocker notes
+
+// 7. Create design that adds space for ads
