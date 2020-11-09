@@ -1,0 +1,374 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="314" viewBox="0 0 913 314">
+    <!-- viewBox="0 0 913 314" -->
+    <defs>
+        <style>
+            .keys {
+                fill: #1d1d1d;
+                stroke: #bfbfbf;
+            }
+
+            .cls-2 {
+                stroke: none;
+            }
+
+            .cls-3 {
+                fill: none;
+            }
+        </style>
+    </defs>
+    <g id="" data-name="Group 149" transform="translate(-470 -710)">
+
+
+        <!-- NUMERIC ROW -->
+
+        <!-- Tilde Key -->
+        <g id="tilde__group" class="keys" data-name="tilde__group" transform="translate(473 713)">
+            <rect id="tilde__key" x="0.5" y="0.5" width="59" height="59" rx="8.5" />
+            <text id="tilde__text" x="25" y="25">~</text>
+            <text id="tilde__text" x="25" y="45">`</text>
+        </g>
+
+        <!-- 1 Key -->
+        <g id="1__group" class="keys" data-name="1__group" transform="translate(536 713)">
+            <rect id="1__key" x="0.5" y="0.5" width="60" height="60" rx="8.5" stroke="pink" stroke-width="2" />
+            <text class="1__text" x="26" y="25">!</text>
+            <text class="1__text" x="25" y="45">1</text>
+        </g>
+
+        <!-- 2 Key -->
+        <g id="2__group" class="keys" data-name="2__group" transform="translate(599 713)">
+            <rect id="2__key" width="60" height="60" rx="8.5" />
+            <text class="2__text" x="22" y="25">@</text>
+            <text class="2__text" x="25" y="45">2</text>
+        </g>
+
+        <!-- 3 Key -->
+        <g id="3__group" class="keys" data-name="3__group" transform="translate(661 713)">
+            <rect id="3__key" width="60" height="60" rx="9" />
+            <text class="3__text" x="25" y="25">#</text>
+            <text class="3__text" x="25" y="45">3</text>
+        </g>
+
+        <!-- 4 Key -->
+        <g id="4__group" class="keys" data-name="4__group" transform="translate(724 713)">
+            <rect id="4__key" width="60" height="60" rx="9" />
+            <text class="4__text" x="25" y="25">$</text>
+            <text class="4__text" x="25" y="45">4</text>
+        </g>
+
+        <!-- 5 Key -->
+        <g id="5__group" class="keys" data-name="5__group" transform="translate(787 713)">
+            <rect id="5__key" width="60" height="60" rx="9" />
+            <text class="5__text" x="23" y="25">%</text>
+            <text class="5__text" x="25" y="45">5</text>
+        </g>
+
+        <!-- 6 Key -->
+        <g id="6__group" class="keys" data-name="6__group" transform="translate(851 713)">
+            <rect id="6__key" width="60" height="60" rx="9" />
+            <text class="6__text" x="25" y="25">^</text>
+            <text class="6__text" x="25" y="45">6</text>
+        </g>
+
+        <!-- 7 Key -->
+        <g id="7__group" class="keys" data-name="7__group" transform="translate(914 713)">
+            <rect id="7__key" width="60" height="60" rx="9" />
+            <text class="7__text" x="23" y="25">&</text>
+            <text class="7__text" x="25" y="45">7</text>
+        </g>
+
+        <!-- 8 Key -->
+        <g id="8__group" class="keys" data-name="8__group" transform="translate(976 713)">
+            <rect id="8__key" width="60" height="60" rx="9" />
+            <text class="8__text" x="23" y="25">*</text>
+            <text class="8__text" x="25" y="45">8</text>
+        </g>
+
+        <!-- 9 Key -->
+        <g id="9__group" class="keys" data-name="9__group" transform="translate(1039 713)">
+            <rect id="9__key" width="60" height="60" rx="9" />
+            <text class="9__text" x="24" y="24">(</text>
+            <text class="9__text" x="25" y="45">9</text>
+        </g>
+
+        <!-- 0 Key -->
+        <g id="0__group" class="keys" data-name="0__group" transform="translate(1101 713)">
+            <rect id="0__key" width="60" height="60" rx="8.5" />
+            <text class="0__text" x="27" y="25">)</text>
+            <text class="0__text" x="25" y="45">0</text>
+        </g>
+
+        <!-- Hyphen Key -->
+        <g id="hyphen__group" class="keys" datahyphenname="hyphen__group" transform="translate(1163 713)">
+            <rect id="hyphen__key" width="60" height="60" rx="8.5" />
+            <text class="hyphen__text" x="27" y="25">_</text>
+            <text class="hyphen__text" x="28" y="45">-</text>
+        </g>
+
+        <!-- Equal Key -->
+        <g id="equal__group" class="keys" data-name="equal__group" transform="translate(1225 713)">
+            <rect id="equal__key" class="keys" width="60" height="60" rx="8.5" />
+            <text class="equal__text" x="27" y="25">+</text>
+            <text class="equal__text" x="27" y="45">=</text>
+        </g>
+
+        <!-- Delete Key -->
+        <g id="delete__group" class="keys" data-name="delete__group" transform="translate(1287 713)">
+            <rect width="97" height="60" rx="9" />
+            <text class="delete__text" x="50" y="45">delete</text>
+        </g>
+
+
+        <!-- TOP ROW -->
+
+        <!-- Caps Lock Key -->
+        <g id="caps_lock__group" class="keys" data-name="caps_lock__group" transform="translate(473 776)">
+            <rect class="cls-2" width="93" height="58" rx="9" />
+            <text class="caps_lock__text" x="10" y="45">caps lock</text>
+        </g>
+
+        <!-- Q Key -->
+        <g id="q__group" class="keys" data-name="q__group" transform="translate(569 776)">
+            <rect id="q__key" width="60" height="60" rx="8.5" />
+            <text class="q__text" x="25" y="35">Q</text>
+        </g>
+
+        <!-- W Key -->
+        <g id="w__group" class="keys" data-name="w__group" transform="translate(631 776)">
+            <rect id="w__key" width="60" height="60" rx="8.5" />
+            <text class="w__text" x="25" y="35">W</text>
+        </g>
+
+        <!-- E Key -->
+        <g id="e__group" class="keys" data-name="e__group" transform="translate(694 776)">
+            <rect id="e__key" width="60" height="60" rx="8.5" />
+            <text class="e__text" x="25" y="35">E</text>
+        </g>
+
+        <!-- R Key -->
+        <g id="r__group" class="keys" data-name="r__group" transform="translate(757 776)">
+            <rect id="r__key" width="60" height="60" rx="8.5" />
+            <text class="r__text" x="25" y="35">R</text>
+        </g>
+
+        <!-- T Key -->
+        <g id="t__group" class="keys" data-name="t__group" transform="translate(819 776)">
+            <rect id="t__key" width="60" height="60" rx="8.5" />
+            <text class="t__text" x="25" y="35">T</text>
+        </g>
+
+        <!-- Y Key -->
+        <g id="y__group" class="keys" data-name="y__group" transform="translate(882 776)">
+            <rect id="y__key" width="60" height="60" rx="8.5" />
+            <text class="y__text" x="25" y="35">Y</text>
+        </g>
+
+        <!-- U Key -->
+        <g id="u__group" class="keys" data-name="u__group" transform="translate(944 776)">
+            <rect id="u__key" width="60" height="60" rx="8.5" />
+            <text class="u__text" x="25" y="35">U</text>
+        </g>
+
+        <!-- I Key -->
+        <g id="i__group" class="keys" data-name="i__group" transform="translate(1008 776)">
+            <rect id="i__key" width="60" height="60" rx="8.5" />
+            <text class="i__text" x="25" y="35">I</text>
+        </g>
+
+        <!-- O Key -->
+        <g id="o__group" class="keys" data-name="o__group" transform="translate(1071 776)">
+            <rect id="o__key" width="60" height="60" rx="8.5" />
+            <text class="o__text" x="25" y="35">O</text>
+        </g>
+
+        <!-- P Key -->
+        <g id="p__group" class="keys" data-name="p__group" transform="translate(1133 776)">
+            <rect id="p__key" width="60" height="60" rx="8.5" />
+            <text class="p__text" x="25" y="35">P</text>
+        </g>
+
+        <!-- Left Brace Key -->
+        <g id="left_brace__group" class="keys" data-name="left_brace__group" transform="translate(1197 776)">
+            <rect id="left_brace__key" width="60" height="60" rx="8.5" />
+            <text class="left_brace__text" x="25" y="25">{</text>
+            <text class="left_brace__text" x="27" y="45">[</text>
+        </g>
+
+        <!-- Right Brace Key -->
+        <g id="right_brace__group" class="keys" data-name="right_brace__group" transform="translate(1259 776)">
+            <rect id="right_brace__key" width="60" height="60" rx="8.5" />
+            <text class="right_brace__text" x="25" y="25">}</text>
+            <text class="right_brace__text" x="25" y="45">]</text>
+        </g>
+
+        <!-- Forward Slash Key -->
+        <g id="forward_slash__group" class="keys" data-name="forward_slash__group" transform="translate(1322 776)">
+            <rect id="forward_slash__key" width="60" height="60" rx="8.5" />
+            <text class="forward_slash__text" x="25" y="25">|</text>
+            <text class="forward_slash__text" x="25" y="45">\</text>
+        </g>
+
+        <!-- MIDDLE ROW -->
+
+        <!-- Shift Key -->
+        <g id="shift__group" class="keys" data-name="shift__group" transform="translate(473 837)">
+            <rect class="shift__key" width="107" height="60" rx="9" />
+            <text class="shift__text" x="10" y="45">shift</text>
+        </g>
+
+        <!-- A Key -->
+        <g id="a__group" class="keys" data-name="a__group" transform="translate(583 837)">
+            <rect id="a__key" width="60" height="60" rx="8.5" />
+            <text class="a__text" x="25" y="35">A</text>
+        </g>
+
+        <!-- S Key -->
+        <g id="s__group" class="keys" data-name="s__group" transform="translate(647 837)">
+            <rect id="s__key" width="60" height="60" rx="8.5" />
+            <text class="s__text" x="25" y="35">S</text>
+        </g>
+
+        <!-- D Key -->
+        <g id="d__group" class="keys" data-name="d__group" transform="translate(709 837)">
+            <rect id="d__key" width="60" height="60" rx="8.5" />
+            <text class="d__text" x="25" y="35">D</text>
+        </g>
+
+        <!-- F Key -->
+        <g id="f__group" class="keys" data-name="d__group" transform="translate(772 837)">
+            <rect id="f__key" width="60" height="60" rx="8.5" />
+            <text class="f__text" x="25" y="35">F</text>
+        </g>
+
+        <!-- G Key -->
+        <g id="g__group" class="keys" data-name="g__group" transform="translate(836 837)">
+            <rect id="g__key" width="60" height="60" rx="8.5" />
+            <text class="g__text" x="25" y="35">G</text>
+        </g>
+
+        <!-- H Key -->
+        <g id="h__group" class="keys" data-name="h__group" transform="translate(897 837)">
+            <rect id="h__key" width="60" height="60" rx="8.5" />
+            <text class="h__text" x="25" y="35">H</text>
+        </g>
+
+        <!-- J Key -->
+        <g id="j__group" class="keys" data-name="j__group" transform="translate(961 837)">
+            <rect id="j__key" width="60" height="60" rx="8.5" />
+            <text class="j__text" x="25" y="35">J</text>
+        </g>
+
+        <!-- K Key -->
+        <g id="k__group" class="keys" data-name="k__group" transform="translate(1024 837)">
+            <rect id="k__key" width="60" height="60" rx="8.5" />
+            <text class="k__text" x="25" y="35">K</text>
+        </g>
+
+        <!-- L Key -->
+        <g id="l__group" class="keys" data-name="l__group" transform="translate(1086 837)">
+            <rect id="l__key" width="60" height="60" rx="8.5" />
+            <text class="l__text" x="25" y="35">L</text>
+        </g>
+
+        <!-- Colon Key -->
+        <g id="colon__group" class="keys" data-name="colon__group" transform="translate(1147 837)">
+            <rect id="colon__key" width="60" height="60" rx="8.5" />
+            <text class="colon__text" x="25" y="25">:</text>
+            <text class="colon__text" x="25" y="45">;</text>
+        </g>
+
+        <!-- Quotation Key -->
+        <g id="quotation__group" class="keys" data-name="quotation__group" transform="translate(1211 837)">
+            <rect id="quotation__key" width="60" height="60" rx="8.5" />
+            <text class="quotation__text" x="25" y="25">"</text>
+            <text class="quotation__text" x="27" y="45">'</text>
+        </g>
+
+        <!-- Enter Key -->
+        <g id="enter__group" class="keys" data-name="enter__group" transform="translate(1276 837)">
+            <rect class="enter__key" width="106" height="60" rx="9" />
+            <text class="enter__text" x="60" y="45">enter</text>
+        </g>
+
+
+
+
+
+        <g id="Rectangle_90" data-name="Rectangle 90" class="cls-1" transform="translate(615 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_91" data-name="Rectangle 91" class="cls-1" transform="translate(679 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_92" data-name="Rectangle 92" class="cls-1" transform="translate(740 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_93" data-name="Rectangle 93" class="cls-1" transform="translate(804 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_94" data-name="Rectangle 94" class="cls-1" transform="translate(865 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_95" data-name="Rectangle 95" class="cls-1" transform="translate(930 899)">
+            <rect class="cls-2" width="59" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="58" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_96" data-name="Rectangle 96" class="cls-1" transform="translate(993 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_97" data-name="Rectangle 97" class="cls-1" transform="translate(1054 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_98" data-name="Rectangle 98" class="cls-1" transform="translate(1117 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_99" data-name="Rectangle 99" class="cls-1" transform="translate(1117 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_100" data-name="Rectangle 100" class="cls-1" transform="translate(1179 899)">
+            <rect class="cls-2" width="60" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="59" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_101" data-name="Rectangle 101" class="cls-1" transform="translate(1243 899)">
+            <rect class="cls-2" width="139" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="138" height="60" rx="8.5" />
+        </g>
+        <g id="Rectangle_72" data-name="Rectangle 72" class="cls-1" transform="translate(473 899)">
+            <rect class="cls-2" width="141" height="61" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="140" height="60" rx="8.5" />
+            <text class="a__text" x="25" y="35">A</text>
+
+        </g>
+        <g id="Rectangle_74" data-name="Rectangle 74" class="cls-1" transform="translate(601 961)">
+            <rect class="cls-2" width="106" height="66" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="105" height="65" rx="8.5" />
+        </g>
+        <g id="Rectangle_75" data-name="Rectangle 75" class="cls-1" transform="translate(709 961)">
+            <rect class="cls-2" width="389" height="66" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="388" height="65" rx="8.5" />
+        </g>
+        <g id="Rectangle_76" data-name="Rectangle 76" class="cls-1" transform="translate(1100 960)">
+            <rect class="cls-2" width="97" height="65" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="96" height="64" rx="8.5" />
+        </g>
+        <g id="Rectangle_77" data-name="Rectangle 77" class="cls-1" transform="translate(1200 961)">
+            <rect class="cls-2" width="186" height="66" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="185" height="65" rx="8.5" />
+        </g>
+
+        <g id="Rectangle_73" data-name="Rectangle 73" class="cls-1" transform="translate(473 961)">
+            <rect class="cls-2" width="125" height="66" rx="9" />
+            <rect class="cls-3" x="0.5" y="0.5" width="124" height="65" rx="8.5" />
+        </g>
+
+        </>
+</svg>
