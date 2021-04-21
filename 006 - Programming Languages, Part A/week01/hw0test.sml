@@ -1,5 +1,5 @@
 (* Homework0 Simple Test *)
-use "./homework0.sml";
+use "./hw0.sml";
 
 (* These are basic test cases. Passing these tests does not guarantee that your code will pass the actual homework grader *)
 (* To run the test, add a new line to the top of this file: use "homeworkname.sml"; *)
