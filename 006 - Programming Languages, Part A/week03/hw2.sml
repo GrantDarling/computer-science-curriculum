@@ -14,7 +14,70 @@ fun same_string(s1 : string, s2 : string) =
 (* Else return SOME string_list without string in list *)
 (* a *)   
 
-(* If list is empty then NONE if not empty recursive SOME list *)
+
+fun remove_x_from_ys(x, ys) = (* "2", ["1","2","2","3","4"] *)
+   case ys of 
+      [] => [] (* NONE *)
+   |  y::ys' => if x = y 
+                then remove_x_from_ys(x, ys') (* remove x *)
+                else y::remove_x_from_ys(x, ys') (* keep y, keep going *)
+
+fun all_except_option(x, ys) = 
+   case ys of 
+      [] => [] (* NONE *)
+   |  y::ys' => if x = y
+                then (remove_x_from_ys(x, ys)) (* remove x's func *)
+                else (y::all_except_option(x, ys')) (* Keep checking *)
+
+fun all_except_option(x, ys) = 
+   case ys of 
+      [] => NONE
+   |  ys => SOME ys
+
+
+
+
+
+
+
+
+(* 
+fun remove_x_from_ys(x, ys) = (* "2", ["1","2","2","3","4"] *)
+   case ys of 
+      [] => [] (* NONE *)
+   |  y::ys' => if x = y 
+                then remove_x_from_ys(x, ys') (* remove x's*)
+                else y::remove_x_from_ys(x, ys') (* Keep checking *)
+
+fun all_except_option(x, ys) = 
+   case ys of 
+      [] => NONE (* NONE *)
+   |  y::ys' => if x = y
+                then SOME (remove_x_from_ys(x, ys)) (* remove x's*)
+                else y::all_except_option(x, ys') (* Keep checking *)
+
+ *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(* 
 fun string_in_list(x,ys) =
    case ys of
       [] => false
@@ -42,7 +105,7 @@ fun kk(x, ys) =
    [] => NONE 
    | ys => SOME ys
 
-
+ *)
 
 
 
