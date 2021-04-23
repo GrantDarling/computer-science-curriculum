@@ -7,114 +7,40 @@ fun same_string(s1 : string, s2 : string) =
     s1 = s2
 
 (* put your solutions for problem 1 here *)
-
-(* a *)
-
-(* If string is not in the list return NONE *)
-(* Else return SOME string_list without string in list *)
 (* a *)   
-
-
-fun remove_x_from_ys(x, ys) = (* "2", ["1","2","2","3","4"] *)
-   case ys of 
-      [] => [] (* NONE *)
-   |  y::ys' => if x = y 
-                then remove_x_from_ys(x, ys') (* remove x *)
-                else y::remove_x_from_ys(x, ys') (* keep y, keep going *)
-
 fun all_except_option(x, ys) = 
-   case ys of 
-      [] => [] (* NONE *)
-   |  y::ys' => if x = y
-                then (remove_x_from_ys(x, ys)) (* remove x's func *)
-                else (y::all_except_option(x, ys')) (* Keep checking *)
+   let fun ys_without_x(x, list) = 
+         case list of
+              []    => []
+            | y::list' => if same_string(x,y) then ys_without_x(x,list') else y::ys_without_x(x,list')
+   in 
+      if ys_without_x(x, ys) = ys then NONE else SOME (ys_without_x(x, ys)) 
+   end 
 
-fun all_except_option(x, ys) = 
-   case ys of 
-      [] => NONE
-   |  ys => SOME ys
+(* b *)
+fun get_substitutions1(str_lst_lst, str) =
+   case str_lst_lst of 
+        []                 => []
+      | list::str_lst_lst' => case all_except_option(str, list) of 
+                                   NONE => get_substitutions1(str_lst_lst', str)
+                                 | SOME list => list@get_substitutions1(str_lst_lst', str)
 
+(* c *)
+fun get_substitutions2(str_lst_lst, str) =
+   let 
+      fun inner_substitution(str_lst_lst, str) =
+         case str_lst_lst of 
+         []                 => []
+         | list::str_lst_lst' => case all_except_option(str, list) of 
+                                      NONE => inner_substitution(str_lst_lst', str)
+                                    | SOME list => list@inner_substitution(str_lst_lst', str)
+   in 
+      inner_substitution(str_lst_lst, str)
+   end 
 
-
-
-
-
-
-
-(* 
-fun remove_x_from_ys(x, ys) = (* "2", ["1","2","2","3","4"] *)
-   case ys of 
-      [] => [] (* NONE *)
-   |  y::ys' => if x = y 
-                then remove_x_from_ys(x, ys') (* remove x's*)
-                else y::remove_x_from_ys(x, ys') (* Keep checking *)
-
-fun all_except_option(x, ys) = 
-   case ys of 
-      [] => NONE (* NONE *)
-   |  y::ys' => if x = y
-                then SOME (remove_x_from_ys(x, ys)) (* remove x's*)
-                else y::all_except_option(x, ys') (* Keep checking *)
-
- *)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(* 
-fun string_in_list(x,ys) =
-   case ys of
-      [] => false
-      | y::ys' => case x = y of 
-                  true => true
-               |  false => case [y] of
-                           [] => string_in_list(x,[]) 
-                           |_ => string_in_list(x,ys')
-
-fun remove_string_from_list(x,ys) = 
-   case ys of 
-      [] => []
-      | y::ys' => case x = y of 
-                   true => remove_string_from_list(x, ys')
-                | false => y::remove_string_from_list(x, ys')
-
-
-fun all_except_option(x, ys) =
-   case string_in_list(x,ys) of
-      true => remove_string_from_list(x, ys)
-      | false => []
-
-fun kk(x, ys) = 
-   case all_except_option(x,ys) of 
-   [] => NONE 
-   | ys => SOME ys
-
- *)
-
-
-
-
-
-
-
-
-
+(* d *)
+fun similar_names(similar_names_lists, full_name) =
+   get_substitutions2(similar_names_lists)
 
 
 
