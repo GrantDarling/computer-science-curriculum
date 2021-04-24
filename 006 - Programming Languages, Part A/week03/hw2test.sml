@@ -92,29 +92,17 @@ val f10_4 = score ([(Hearts, Num 2),(Diamonds, Num 4)],1) (* 7*)
  *)
 
  (* g *)
-
-val f11_0 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[], 15) (* 6 *)
-val f11_1 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) (* 6 *)
 (* 
-val f11_1 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) (* 6 *)
-
-val f11_2 = officiate ([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
-                        [Draw,Draw,Draw,Draw,Draw],
-                        42)
-             (* 3 *)
-
-val f11_3 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
+val f11_0 = officiate ([],[], 15) = 7
+val f11_1 = officiate ([(Hearts, Ace)],[Draw], 10) = 5
+val f11_2 = officiate ([(Hearts, Queen)],[Draw], 11) = 0
+val f11_3 = officiate ([(Hearts, Queen)],[Draw], 20) = 5
+val f11_4 = officiate ([(Hearts, Queen),(Clubs, Ace)],[Draw, Discard((Hearts, Queen)), Draw], 20) = 4
+val f11_5 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
                          [Draw,Discard(Hearts,Jack)],
                          42);
                false) 
               handle IllegalMove => true)
-
-              (* Handle Error *)
-
-val f11_4 = officiate ([],
-                        [Draw,Draw,Draw,Draw,Draw],
-                        42)
-              
-
-              (*  *)
+val f11_6 = officiate ([(Hearts, Queen),(Clubs, Ace)],[Draw, Draw, Draw, Discard(Spades, Ace)], 40) = 19
+val f11_7 = officiate ([(Hearts, Queen),(Clubs, Ace)],[Draw, Draw, Draw, Discard(Spades, Ace)], 20)  = 5
  *)

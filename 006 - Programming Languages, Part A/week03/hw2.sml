@@ -141,35 +141,22 @@ fun score(cards, goal) =
 fun officiate(card_list, move_list, goal) = 
     let 
          val held_cards = []
-
          fun play_game(cards, hand, moves, goal) = 
             case (cards, hand, moves, goal) of 
-                        (cards, hand, [], goal) => (cards, hand, moves, goal)
-                        | (cards_head::cards_tail, hand, moves_head::moves_tail, goal) => play_game(cards_tail, cards_head::hand, moves_tail, goal)
+                 (cards, hand, [], goal) => (cards, hand, moves, goal)
+               | ([], hand, Draw::moves_tail, goal) => (cards, hand, moves, goal)
+               | (cards_head::cards_tail, hand, Draw::moves_tail, goal) => if sum_cards(cards_head::hand) > goal
+                                                                           then (cards_head::cards_tail, hand, Draw::moves_tail, goal)
+                                                                           else  play_game(cards_tail, cards_head::hand, moves_tail, goal)
+               | (cards_head::cards_tail, hand, moves_head::moves_tail, goal) => play_game((cards_head::cards_tail), remove_card(hand, (case moves_head of Discard card => card), IllegalMove), moves_tail, goal)
 
     in 
-         play_game(card_list, held_cards, move_list, goal)
+         case play_game(card_list, held_cards, move_list, goal) of 
+            (card_list, held_cards, move_list, goal) => score(held_cards, goal)
     end 
 
 
-(* fun officiate(card_list, move_list, goal) = 
-    let 
-         fun current_game(card_list, move_list, goal, cards_head, moves_head) = 
-             if moves_head = Draw 
-             then case card_list of 
-                       [] => []
-                     |  head::tail => moves_head::officiate(tail, move_list, goal)
-             else [cards_head]
-    in 
-         case (card_list, move_list, goal) of 
-              (cards, [], goal) => []
-            | (cards_head::cards_tail, moves_head::moves_tail, goal) => current_game(cards_tail, moves_tail, goal, cards_head, moves_head)
-    end  *)
 
+    (* Challenge Problems *)
 
-(* 
-   case (card_list, move_list, goal) of 
-        ([],moves,goal) => ([],moves,goal)
-      | (cards, [], goal) => score(cards, goal)
-      | (cards, moves, goal) => score(cards, goal)
- *)
+    fun score_challenge
