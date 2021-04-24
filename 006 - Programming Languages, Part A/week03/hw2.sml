@@ -105,8 +105,68 @@ fun remove_card(card_list, card, e) =
 
 fun all_same_color(card_list) = 
    case card_list of 
-         head::[] => true
+        head::[] => true
       | head::neck::tail => if card_color(head) = card_color(neck) 
                            then all_same_color(neck::tail)
                            else false
+
+(* e *)
+fun sum_cards(card_list) = 
+   let 
+      fun accumulator(cards, acc) = 
+         case card_list of 
+                  [] => acc
+               |  head::tail => card_value(head) + sum_cards(tail)
+   in 
+    accumulator(card_list, 0)
+   end 
+
+(* f *)
+
+
+(* 
+
+The objective is to end the game with a low score (0 is best). 
+
+Scoring works as follows: 
+
+
+1. Let sum be the sum of the values of the held-cards. 
+
+2. If sum is greater than goal, the preliminary score is three times (sum−goal),
+
+else the preliminary score is (goal − sum). The score is the preliminary score - 
+
+unless all the held-cards are the same color, in which case the score is the preliminary score divided by 2 (and rounded down as usual
+with integer division; use ML’s div operator). 
+
+*)
+
+fun score(cards, goal) = 
+   let 
+      val sum = sum_cards(cards) 
+      val is_same_color = all_same_color(cards)
+   in  
+      if sum > goal andalso is_same_color
+      then (3*(sum - goal)) div 2
+      else if  sum > goal 
+           then 3*(sum - goal)
+           else if sum < goal andalso is_same_color
+                then (goal - sum) div 2
+                else (goal - sum) 
+   end 
+
+
+
+fun officiate(cards_held, move_list, goal) = 
+    let 
+    in 
+    end 
+
+
+
+   case (cards_held, move_list, goal) of 
+        ([],moves,goal) => ([],moves,goal)
+      | (cards, [], goal) => score(cards, goal)
+      | (cards, moves, goal) => score(cards, goal)
 

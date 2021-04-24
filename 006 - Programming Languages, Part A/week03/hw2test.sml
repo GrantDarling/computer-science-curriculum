@@ -69,7 +69,48 @@ val f7_4 = remove_card ([(Hearts, Ace),(Hearts, King),(Hearts, Ace)], (Hearts, A
  *)
 
 (* d *)
-
+(* 
 val f8_1 = all_same_color [(Hearts, Ace), (Hearts, Ace)] (* true *)
 val f8_2 = all_same_color [(Hearts, Ace), (Diamonds, King)] (* true *)
-val f8_3 = all_same_color [(Spades, Num 10), (Clubs, Num 3), (Hearts, Ace), (Hearts, King)] (* true *)
+val f8_3 = all_same_color [(Spades, Num 10), (Clubs, Num 3), (Hearts, Ace), (Hearts, King)] (* false *)
+val f8_4 = all_same_color [(Spades, Num 10), (Clubs, Num 3), (Spades, Ace), (Clubs, King)] (* true *)
+ *)
+
+(* e *)
+(* 
+val f9_1 = sum_cards [(Clubs, Num 2),(Clubs, Num 2)]  (* 4 *)
+val f9_2 = sum_cards [(Clubs, Num 2),(Clubs, King)]  (* 12 *)
+val f9_3 = sum_cards [(Clubs, Ace),(Clubs, King)]  (* 21 *)
+ *)
+
+(* f *)
+(* 
+val f10_1 = score ([(Hearts, Num 2),(Clubs, Num 4)],10) (* 4 *)
+val f10_2 = score ([(Hearts, Num 2),(Clubs, Num 4)],1) (* 15 *)
+val f10_3 = score ([(Hearts, Num 2),(Hearts, Num 4)],10) (* 2 *)
+val f10_4 = score ([(Hearts, Num 2),(Diamonds, Num 4)],1) (* 7*)
+ *)
+
+ (* g *)
+(* 
+val f11_1 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) (* 6 *)
+
+val f11_2 = officiate ([(Clubs,Ace),(Spades,Ace),(Clubs,Ace),(Spades,Ace)],
+                        [Draw,Draw,Draw,Draw,Draw],
+                        42)
+             (* 3 *)
+
+val f11_3 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
+                         [Draw,Discard(Hearts,Jack)],
+                         42);
+               false) 
+              handle IllegalMove => true)
+
+              (* Handle Error *)
+
+val f11_4 = officiate ([],
+                        [Draw,Draw,Draw,Draw,Draw],
+                        42)
+              
+
+              Handle Error *)
