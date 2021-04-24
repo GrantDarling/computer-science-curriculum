@@ -39,81 +39,19 @@ fun get_substitutions2(str_lst_lst, str) =
    end 
 
 (* d *)
-
 fun similar_names(all_names, full_name) =
    let 
-      fun get_first_name(full_name) =
-         case full_name of {first=a,middle=b,last=c} => a
-
-      fun get_second_name(full_name) =
-         case full_name of {first=a,middle=b,last=c} => b
-
-      fun get_third_name(full_name) =
-         case full_name of {first=a,middle=b,last=c} => c
-
-      val subsituted_names_list = get_first_name(full_name)::get_substitutions2(all_names, get_first_name(full_name))
-
-      fun object_list(all_names, full_name) = 
-         case all_names of 
-            [] => []
-            |head::tail => [{first=head,middle=get_second_name(full_name),last=get_third_name(full_name)}]@object_list(tail, full_name)
+      fun get_f_name({first=x, middle=y, last=z}) = x
+      fun get_m_name({first=x, middle=y, last=z}) = y
+      fun get_l_name({first=x, middle=y, last=z}) = z
+      val subsituted_names = get_f_name(full_name)::get_substitutions2(all_names, get_f_name(full_name))
+      fun conv_fname_to_sub_names(sub_fnames, full_name) = 
+         case sub_fnames of 
+              [] => []
+            | head::tail => [{first=head,middle=get_m_name(full_name),last=get_l_name(full_name)}]@conv_fname_to_sub_names(tail, full_name)
    in 
-      case subsituted_names_list of 
-         head::tail => [{first=head,middle=get_second_name(full_name),last=get_third_name(full_name)}]@object_list(tail, full_name)
+      conv_fname_to_sub_names(subsituted_names, full_name)
    end 
-
-(* 
-fun similar_names(all_names, full_name) =
-   convert_to_objs(get_first_name(full_name)::get_list_f_substitutes(all_names, full_name), full_name)
- *)
-
-   (* convert_to_objs(get_first_name(full_name)::get_list_f_substitutes(all_names, full_name), full_name) *)
-
-
-(* loop through list of objects and replace a with head*)
-(* USE {first=a,middle=b,last=c}::t NOT h::t and you should be able to find a solution! *)
-   
-
-  
-   (* get_substitutions2(similar_names_lists, "") *)
-
-
-
-(* 
-CLOSEST YET 
-
-fun extract_first_name(full_name: {first:string, last:string, middle:string}) =
-   case full_name of
-         {first:string, last:string, middle:string} => first
-
-fun get_names(similar_names_lists, full_name) = 
-      let
-         val first_name = extract_first_name(full_name)
-         val list_of_name = "dile"::get_substitutions2(similar_names_lists, first_name) 
-      in 
-         case list_of_name of 
-            h::t => h
-      end  
-
-fun similar_namesx(similar_names_lists, full_name) = 
-      case similar_names_lists of 
-      [] => []
-      |h::t => [full_name]@similar_namesx(t, full_name)
-
-
-fun similar_names(similar_names_lists, full_name) = 
-   let 
-      val xx = get_names(similar_names_lists, full_name)
-   in 
-   case similar_namesx(similar_names_lists, full_name) of 
-         {first=a,middle=b,last=c}::t => {first=get_names(similar_names_lists, full_name),middle=b,last=c}::similar_namesx(t, {first=get_names(similar_names_lists, full_name),middle=b,last=c})
-   end 
-
-
-
- *)
-
-
 
 (* you may assume that Num is always used with values 2, 3, ..., 10
    though it will not really come up *)
@@ -127,3 +65,24 @@ datatype move = Discard of card | Draw
 exception IllegalMove
 
 (* put your solutions for problem 2 here *)
+
+(* 2 *)
+
+(* a *)
+
+fun card_color(card) = 
+   case card of 
+        (Spades,   suit) => Black
+     |  (Clubs,    suit) => Black
+     |  (Diamonds, suit) => Red
+     |  (Hearts,   suit) => Red
+
+(* b *)
+
+
+fun card_value(card) = 
+   case card of 
+      (suit, Ace) => 11
+   |  (suit, Num x ) => x
+   |  (suit, rank) => 10
+

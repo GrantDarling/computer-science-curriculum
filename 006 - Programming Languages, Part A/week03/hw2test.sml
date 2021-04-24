@@ -28,9 +28,7 @@ val f3_2 = get_substitutions2 ([["Fred","Fredrick"],["Jeff","Jeffrey"],["Geoff",
 
 
 (* d *)
-(* val f4_1 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]],
-{first="Fred", middle="W", last="Smith"}) *)
-
+(* 
 val f4_1 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]],
 {first="Fred", middle="W", last="Smith"})
 
@@ -39,5 +37,24 @@ val f4_2 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty", "Cool_Guy_J"
 
 val f4_3 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]],
 {first="Tinkles", middle="Dave", last="Honer"})
+ *)
 
-(* d *)
+(* 2 *)
+
+(* a *)
+(* 
+val f5_1 = card_color(Spades, Ace)
+val f5_2 = card_color(Clubs, King)
+val f5_3 = card_color(Hearts, 10)
+val f5_4 = card_color(Diamonds, Jack)
+ *)
+
+(* b *)
+(* 
+val f6_1 = card_value(Spades, Ace)
+val f6_2 = card_value(Clubs, King)
+val f6_3 = card_value(Diamonds, Jack)
+val f6_4 = card_value(Hearts, Num 8)
+val f6_5 = card_value(Hearts, Num 3)
+ *)
+
