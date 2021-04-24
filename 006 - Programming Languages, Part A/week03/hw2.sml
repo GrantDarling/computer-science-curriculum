@@ -39,8 +39,39 @@ fun get_substitutions2(str_lst_lst, str) =
    end 
 
 (* d *)
-fun similar_names(similar_names_lists, full_name) =
-   get_substitutions2(similar_names_lists)
+
+
+
+
+
+
+fun extract_first_name(full_name: {first:string, last:string, middle:string}) =
+   case full_name of
+         {first:string, last:string, middle:string} => first
+
+fun get_names(similar_names_lists, full_name) = 
+      let
+         val first_name = extract_first_name(full_name)
+         val list_of_name = first_name::get_substitutions2(similar_names_lists, first_name) 
+      in 
+         list_of_name
+      end  
+
+fun similar_namesx(similar_names_lists, full_name) = 
+      case similar_names_lists of 
+      [] => []
+      |h::t => [full_name]@similar_namesx(t, full_name)
+
+
+fun similar_names(similar_names_lists, full_name) = 
+   case similar_namesx(similar_names_lists, full_name) of 
+         {first=a,middle=b,last=c}::t => {first="test",middle=b,last=c}::similar_namesx(t, full_name)
+    
+
+   
+
+  
+   (* get_substitutions2(similar_names_lists, "") *)
 
 
 
