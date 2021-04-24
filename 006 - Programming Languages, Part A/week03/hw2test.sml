@@ -58,3 +58,18 @@ val f6_4 = card_value(Hearts, Num 8)
 val f6_5 = card_value(Hearts, Num 3)
  *)
 
+(* c *)
+(* 
+val f7_1 = remove_card ([(Hearts, Ace)], (Hearts, Ace), IllegalMove) (* [] *)
+val f7_2 = remove_card ([(Hearts, Ace),(Hearts, King)], (Hearts, Ace), IllegalMove) (* [(Hearts, King)] *)
+val f7_3 = remove_card ([(Hearts, Ace),(Hearts, Ace)], (Hearts, Ace), IllegalMove) (* [(Hearts, Ace)] *)
+val f7_4 = remove_card ([(Hearts, Ace),(Hearts, King),(Hearts, Ace)], (Hearts, Ace), IllegalMove) (* [(Hearts, King),(Hearts, Ace)] *)
+(* Throw exception *)
+(* val f7_3 = remove_card ([(Hearts, Queen),(Hearts, King)], (Hearts, Ace), IllegalMove) [] *)
+ *)
+
+(* d *)
+
+val f8_1 = all_same_color [(Hearts, Ace), (Hearts, Ace)] (* true *)
+val f8_2 = all_same_color [(Hearts, Ace), (Diamonds, King)] (* true *)
+val f8_3 = all_same_color [(Spades, Num 10), (Clubs, Num 3), (Hearts, Ace), (Hearts, King)] (* true *)

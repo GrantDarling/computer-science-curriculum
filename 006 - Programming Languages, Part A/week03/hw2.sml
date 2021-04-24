@@ -79,10 +79,34 @@ fun card_color(card) =
 
 (* b *)
 
-
 fun card_value(card) = 
    case card of 
-      (suit, Ace) => 11
-   |  (suit, Num x ) => x
+      (suit, Num i ) => i
+   |  (suit, Ace) => 11
    |  (suit, rank) => 10
+
+(* c *)
+
+fun remove_card(card_list, card, e) = 
+   let 
+      fun card_list_without_card(cards, card, e) = 
+         case cards of 
+            [] => []
+         |  head::tail => [head]@card_list_without_card(tail, card, e)
+   in 
+      case card_list of 
+         [] => raise e
+         | head::tail => if head = card 
+                         then card_list_without_card(tail, card, e)    (* ["included"] *) (* helper function to loop through cards without head *)
+                         else [head]@remove_card(tail, card, e)
+   end
+   
+(* d *)
+
+fun all_same_color(card_list) = 
+   case card_list of 
+         head::[] => true
+      | head::neck::tail => if card_color(head) = card_color(neck) 
+                           then all_same_color(neck::tail)
+                           else false
 
