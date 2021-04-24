@@ -92,6 +92,9 @@ val f10_4 = score ([(Hearts, Num 2),(Diamonds, Num 4)],1) (* 7*)
  *)
 
  (* g *)
+
+val f11_0 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[], 15) (* 6 *)
+val f11_1 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) (* 6 *)
 (* 
 val f11_1 = officiate ([(Hearts, Num 2),(Clubs, Num 4)],[Draw], 15) (* 6 *)
 
@@ -113,4 +116,5 @@ val f11_4 = officiate ([],
                         42)
               
 
-              Handle Error *)
+              (*  *)
+ *)

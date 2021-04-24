@@ -105,7 +105,8 @@ fun remove_card(card_list, card, e) =
 
 fun all_same_color(card_list) = 
    case card_list of 
-        head::[] => true
+        [] => true
+      | head::[] => true
       | head::neck::tail => if card_color(head) = card_color(neck) 
                            then all_same_color(neck::tail)
                            else false
@@ -123,25 +124,6 @@ fun sum_cards(card_list) =
 
 (* f *)
 
-
-(* 
-
-The objective is to end the game with a low score (0 is best). 
-
-Scoring works as follows: 
-
-
-1. Let sum be the sum of the values of the held-cards. 
-
-2. If sum is greater than goal, the preliminary score is three times (sum−goal),
-
-else the preliminary score is (goal − sum). The score is the preliminary score - 
-
-unless all the held-cards are the same color, in which case the score is the preliminary score divided by 2 (and rounded down as usual
-with integer division; use ML’s div operator). 
-
-*)
-
 fun score(cards, goal) = 
    let 
       val sum = sum_cards(cards) 
@@ -156,17 +138,38 @@ fun score(cards, goal) =
                 else (goal - sum) 
    end 
 
-
-
-fun officiate(cards_held, move_list, goal) = 
+fun officiate(card_list, move_list, goal) = 
     let 
+         val held_cards = []
+
+         fun play_game(cards, hand, moves, goal) = 
+            case (cards, hand, moves, goal) of 
+                        (cards, hand, [], goal) => (cards, hand, moves, goal)
+                        | (cards_head::cards_tail, hand, moves_head::moves_tail, goal) => play_game(cards_tail, cards_head::hand, moves_tail, goal)
+
     in 
+         play_game(card_list, held_cards, move_list, goal)
     end 
 
 
+(* fun officiate(card_list, move_list, goal) = 
+    let 
+         fun current_game(card_list, move_list, goal, cards_head, moves_head) = 
+             if moves_head = Draw 
+             then case card_list of 
+                       [] => []
+                     |  head::tail => moves_head::officiate(tail, move_list, goal)
+             else [cards_head]
+    in 
+         case (card_list, move_list, goal) of 
+              (cards, [], goal) => []
+            | (cards_head::cards_tail, moves_head::moves_tail, goal) => current_game(cards_tail, moves_tail, goal, cards_head, moves_head)
+    end  *)
 
-   case (cards_held, move_list, goal) of 
+
+(* 
+   case (card_list, move_list, goal) of 
         ([],moves,goal) => ([],moves,goal)
       | (cards, [], goal) => score(cards, goal)
       | (cards, moves, goal) => score(cards, goal)
-
+ *)
