@@ -57,16 +57,16 @@ fun get_third_name(full_name) =
    case full_name of 
       {first=a,middle=b,last=c} => c
 
-fun get_list_of_substitutes(list, full_name) =
+fun get_list_f_substitutes(list, full_name) =
    get_substitutions2(list, get_first_name(full_name))
 
 fun convert_to_objs(all_names, full_name) = 
    case all_names of 
       [] => []
-      |h::t => [{first=get_first_name(full_name),middle=get_second_name(full_name),last=get_third_name(full_name)}]@convert_to_objs(t, full_name)
+      |h::t => [{first=h,middle=get_second_name(full_name),last=get_third_name(full_name)}]@convert_to_objs(t, full_name)
 
 fun similar_names(all_names, full_name) =
-   convert_to_objs(all_names, full_name)
+   convert_to_objs(get_first_name(full_name)::get_list_f_substitutes(all_names, full_name), full_name)
 
 
 (* loop through list of objects and replace a with head*)
