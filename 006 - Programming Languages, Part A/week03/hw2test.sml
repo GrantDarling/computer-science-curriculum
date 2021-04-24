@@ -34,4 +34,10 @@ val f3_2 = get_substitutions2 ([["Fred","Fredrick"],["Jeff","Jeffrey"],["Geoff",
 val f4_1 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]],
 {first="Fred", middle="W", last="Smith"})
 
+val f4_2 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty", "Cool_Guy_J"],["Freddie","Fred","F"]],
+{first="Cool_Guy_J", middle="Dave", last="Honer"})
+
+val f4_3 = similar_names([["Fred","Fredrick"],["Elizabeth","Betty"],["Freddie","Fred","F"]],
+{first="Tinkles", middle="Dave", last="Honer"})
+
 (* d *)
