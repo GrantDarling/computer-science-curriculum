@@ -40,10 +40,46 @@ fun get_substitutions2(str_lst_lst, str) =
 
 (* d *)
 
+ 
+fun get_names(all_names, str) = 
+   get_substitutions2(all_names, str)
+
+
+fun get_first_name(full_name) =
+   case full_name of 
+      {first=a,middle=b,last=c} => a
+
+fun get_second_name(full_name) =
+   case full_name of 
+      {first=a,middle=b,last=c} => b
+
+fun get_third_name(full_name) =
+   case full_name of 
+      {first=a,middle=b,last=c} => c
+
+fun get_list_of_substitutes(list, full_name) =
+   get_substitutions2(list, get_first_name(full_name))
+
+fun convert_to_objs(all_names, full_name) = 
+   case all_names of 
+      [] => []
+      |h::t => [{first=get_first_name(full_name),middle=get_second_name(full_name),last=get_third_name(full_name)}]@convert_to_objs(t, full_name)
+
+fun similar_names(all_names, full_name) =
+   convert_to_objs(all_names, full_name)
+
+
+(* loop through list of objects and replace a with head*)
+(* USE {first=a,middle=b,last=c}::t NOT h::t and you should be able to find a solution! *)
+   
+
+  
+   (* get_substitutions2(similar_names_lists, "") *)
 
 
 
-
+(* 
+CLOSEST YET 
 
 fun extract_first_name(full_name: {first:string, last:string, middle:string}) =
    case full_name of
@@ -52,9 +88,10 @@ fun extract_first_name(full_name: {first:string, last:string, middle:string}) =
 fun get_names(similar_names_lists, full_name) = 
       let
          val first_name = extract_first_name(full_name)
-         val list_of_name = first_name::get_substitutions2(similar_names_lists, first_name) 
+         val list_of_name = "dile"::get_substitutions2(similar_names_lists, first_name) 
       in 
-         list_of_name
+         case list_of_name of 
+            h::t => h
       end  
 
 fun similar_namesx(similar_names_lists, full_name) = 
@@ -64,18 +101,16 @@ fun similar_namesx(similar_names_lists, full_name) =
 
 
 fun similar_names(similar_names_lists, full_name) = 
+   let 
+      val xx = get_names(similar_names_lists, full_name)
+   in 
    case similar_namesx(similar_names_lists, full_name) of 
-         {first=a,middle=b,last=c}::t => {first="test",middle=b,last=c}::similar_namesx(t, full_name)
-    
-
-   
-
-  
-   (* get_substitutions2(similar_names_lists, "") *)
+         {first=a,middle=b,last=c}::t => {first=get_names(similar_names_lists, full_name),middle=b,last=c}::similar_namesx(t, {first=get_names(similar_names_lists, full_name),middle=b,last=c})
+   end 
 
 
 
-
+ *)
 
 
 
