@@ -37,7 +37,9 @@ val f4_2_1 = longest_string2 ["A","bc","C"] = "bc"
 val f4_2_2 = longest_string2 ["A","bc","Caaaa"] = "Caaaa"
 val f4_2_3 = longest_string2 [] = ""
 val f4_2_4 = longest_string2 ["Caaaa","bc","Cbbbb"] = "Cbbbb"
- *)
+*)
+
+
 (* Homework3 Simple Test*)
 (* These are basic test cases. Passing these tests does not guarantee that your code will pass the actual homework grader *)
 (* To run the test, add a new line to the top of this file: use "homeworkname.sml"; *)
