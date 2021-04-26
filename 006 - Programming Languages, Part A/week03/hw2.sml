@@ -157,6 +157,41 @@ fun officiate(card_list, move_list, goal) =
 
 
 
-    (* Challenge Problems *)
+(* Challenge Problems *)
 
-    fun score_challenge
+(* 3 *)
+
+(* a *)
+fun ace_swap(cards, Num int) =
+   case cards of 
+      [] => []
+      | (suit,rank)::cards' => if rank = Ace 
+                             then (suit, Num int)::ace_swap(cards', Num int)
+                             else (suit,rank)::ace_swap(cards', Num int)
+
+fun score_challenge(cards, goal) = 
+   let 
+      val low_aces = ace_swap(cards, Num 1)
+      val high_aces = ace_swap(cards, Num 11)
+   in 
+      if score(low_aces, goal) < score(high_aces, goal)
+      then score(low_aces, goal)
+      else score(high_aces, goal)
+   end 
+
+fun officiate_challenge(card_list, move_list, goal) = 
+    let 
+         val held_cards = []
+         fun play_game(cards, hand, moves, goal) = 
+            case (cards, hand, moves, goal) of 
+                 (cards, hand, [], goal) => (cards, hand, moves, goal)
+               | ([], hand, Draw::moves_tail, goal) => (cards, hand, moves, goal)
+               | (cards_head::cards_tail, hand, Draw::moves_tail, goal) => if sum_cards(cards_head::hand) > goal
+                                                                           then (cards_head::cards_tail, hand, Draw::moves_tail, goal)
+                                                                           else  play_game(cards_tail, cards_head::hand, moves_tail, goal)
+               | (cards_head::cards_tail, hand, moves_head::moves_tail, goal) => play_game((cards_head::cards_tail), remove_card(hand, (case moves_head of Discard card => card), IllegalMove), moves_tail, goal)
+
+    in 
+         case play_game(card_list, held_cards, move_list, goal) of 
+            (card_list, held_cards, move_list, goal) => score_challenge(held_cards, goal)
+    end           

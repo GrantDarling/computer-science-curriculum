@@ -106,3 +106,10 @@ val f11_5 = ((officiate([(Clubs,Jack),(Spades,Num(8))],
 val f11_6 = officiate ([(Hearts, Queen),(Clubs, Ace)],[Draw, Draw, Draw, Discard(Spades, Ace)], 40) = 19
 val f11_7 = officiate ([(Hearts, Queen),(Clubs, Ace)],[Draw, Draw, Draw, Discard(Spades, Ace)], 20)  = 5
  *)
+
+val f12_0 = score_challenge([(Hearts, Num 2),(Clubs, Num 4)],10)  (* 4 *)
+val f12_2 = score_challenge ([(Hearts, Num 2),(Clubs, Num 4)],1) (* 15 *)
+val f12_3 = score_challenge ([(Hearts, Num 2),(Hearts, Num 4)],10) (* 2 *)
+val f12_4 = score_challenge ([(Hearts, Num 2),(Diamonds, Num 4)],1) (* 7*)
+val f12_5 = score_challenge ([(Diamonds, Ace),(Diamonds, Ace),(Diamonds, Ace)],100) (* *)
+
