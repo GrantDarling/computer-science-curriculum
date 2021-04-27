@@ -2,7 +2,6 @@
 use "./hw3.sml";
 
 (* 1 *)
-
 (* 
 val f1_1 = only_capitals ["A","B","C"] = ["A","B","C"]
 val f1_2 = only_capitals ["a","B","C"] = ["B","C"]
@@ -62,24 +61,44 @@ val f7_3 = first_answer (fn x => if x = "2" then SOME x else NONE) ["1","2"] = "
  *)
 
 (* 8 *)
-
-(* Homework3 Simple Test*)
-(* These are basic test cases. Passing these tests does not guarantee that your code will pass the actual homework grader *)
-(* To run the test, add a new line to the top of this file: use "homeworkname.sml"; *)
-(* All the tests should evaluate to true. For example, the REPL should say: val test1 = true : bool *)
-(*
-
-val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] = NONE
-
-val test9a = count_wildcards Wildcard = 1
-
-val test9b = count_wild_and_variable_lengths (Variable("a")) = 1
-
-val test9c = count_some_var ("x", Variable("x")) = 1
-
-val test10 = check_pat (Variable("x")) = true
-
-val test11 = match (Const(1), UnitP) = NONE
-
-val test12 = first_match Unit [UnitP] = SOME []
+(* 
+val f8_1 = all_answers (fn x => if x > 1 then SOME [x] else NONE) [2,3,4,5,6,7] 
+val f8_2 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7] 
 *)
+
+(* 9 *) 
+(*  
+(* a *)
+val f9a_1 = count_wildcards Wildcard = 1
+
+(* b *)
+val f9b_1 = count_wild_and_variable_lengths (Variable("art")) = 3
+val f9b_2 = count_wild_and_variable_lengths (Variable("a")) = 1
+val f9b_3 = count_wild_and_variable_lengths (Variable("")) = 0
+
+(* c *)
+val f9c_1 = count_some_var ("x", Variable("x")) = 1
+
+*)
+
+(* 10 *)
+(* 
+val f10_2 = check_pat(TupleP [Wildcard, Wildcard, Variable("x"), Variable("xy")])
+val f10_3 = check_pat(TupleP [Wildcard, Variable("x"), Variable("x"), Variable("xy")])
+val f10_4 = check_pat(Variable("xy"))
+val f10_5 = check_pat(ConstructorP ("egg",ConstructorP ("egg",ConstP 4)))
+val f10_6 = check_pat(TupleP [Wildcard,Wildcard, Variable("x")])
+val f10_7 = check_pat(TupleP[ConstP 17,Wildcard,ConstP 4,ConstructorP ("egg",ConstP 4),ConstructorP ("egg",ConstructorP ("egg",ConstP 4))])
+val f10_8 = check_pat(TupleP[Wildcard,Wildcard])
+val f10_9 = check_pat(TupleP[ConstructorP ("egg",ConstP 4),ConstructorP ("egg",ConstP 4)])
+val f10_10 = check_pat(TupleP[ConstP 17,Wildcard,ConstP 4,ConstructorP ("egg",ConstP 4),ConstructorP ("egg",ConstructorP ("egg",ConstP 4)),TupleP[ConstP 17,Wildcard,ConstP 4,ConstructorP ("egg",ConstP 4),ConstructorP ("egg",ConstructorP ("egg",ConstP 4))],TupleP[Wildcard,Wildcard],TupleP[ConstP 17,ConstP 4],TupleP[ConstructorP ("egg",ConstP 4),ConstructorP ("egg",ConstP 4)]])
+val f10_11 = check_pat(ConstructorP ("hi",TupleP[Variable "x",Variable "x"])) = false
+val f10_12 = check_pat(ConstructorP ("hi",TupleP[Variable "x",ConstructorP ("yo",TupleP[Variable "x",UnitP])])) = true
+ *)
+
+(* 11 *)
+(* 
+val f11_1 = match (Const 17,ConstP 17)
+val f11_2 = first_match Unit [UnitP] = SOME [] 
+*)
+

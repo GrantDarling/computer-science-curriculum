@@ -1,5 +1,4 @@
 (* Coursera Programming Languages, Homework 3, Provided Code *)
-
 exception NoAnswer
 
 datatype pattern = Wildcard
@@ -13,18 +12,6 @@ datatype valu = Const of int
 	      | Unit
 	      | Tuple of valu list
 	      | Constructor of string * valu
-
-fun g f1 f2 p =
-    let 
-	val r = g f1 f2 
-    in
-	case p of
-	    Wildcard          => f1 ()
-	  | Variable x        => f2 x
-	  | TupleP ps         => List.foldl (fn (p,i) => (r p) + i) 0 ps
-	  | ConstructorP(_,p) => r p
-	  | _                 => 0
-    end
 
 (**** for the challenge problem only ****)
 
@@ -72,34 +59,69 @@ fun first_answer f xs =
                                    else first_answer f xs'
 
 (* 8 *)
+fun all_answers f list =
+    let
+        fun reducer (f, list, acc) = case list of
+                                          [] => SOME acc
+                                        | x::xs => case f(x) of
+                                                    NONE => NONE
+                                                |   SOME x => reducer(f, xs, x @ acc)
+    in
+        reducer (f, list, [])
+    end
 
-(* 
-
-1. The first argument should be applied to elements of the second
-argument. 
-
-2. If it returns NONE for any element, then the result for all_answers is NONE
-
-3. Else the calls to the first argument will have produced SOME lst1, SOME lst2, ... SOME lstn and the result of
-all_answers is SOME lst where lst is lst1, lst2, ..., lstn appended together (order doesn’t matter).
-
-Hints: The sample solution is 8 lines. It uses a helper function with an accumulator and uses @. Note
-all_answers f [] should evaluate to SOME []
-
-*)
-
-fun all_answers f xs =
+(* 9 *)
+fun g f1 f2 p =
     let 
-        fun accumulator f xs acc =
-            case xs of 
-                [] => [acc]
-            |   x::xs' => accumulator f xs' [SOME x]@[acc]
+	val r = g f1 f2 
+    in
+	case p of
+	    Wildcard          => f1 ()
+	  | Variable x        => f2 x
+	  | TupleP ps         => List.foldl (fn (p,i) => (r p) + i) 0 ps
+	  | ConstructorP(_,p) => r p
+	  | _                 => 0
+    end
+
+(* a *)
+fun count_wildcards p = 
+    g (fn x => 1) (fn x => 0) p
+
+(* b *)
+fun count_wild_and_variable_lengths p = 
+    g (fn x => 1) (fn x => String.size x) p
+
+(* c *)
+fun count_some_var (str, p) = 
+    g (fn x => 0) (fn x => if x = str then 1 else 0) p
+
+(* 10 *)
+fun check_pat p = 
+    let 
+        fun get_strings pattern =
+            case pattern of 
+                 Variable str      => [str]
+            |    TupleP acc        => List.foldl (fn (p,acc) => acc @ get_strings(p)) [] acc
+            |    ConstructorP(str,p)  => get_strings(p)
+            |    _                 => []
+        
+        fun check_duplicates list =
+            case list of  
+                [] => true
+                | head::tail => if List.exists (fn x => x = head) tail
+                              then  false 
+                              else check_duplicates tail              
     in 
-        accumulator f xs [SOME 1337]
-    end 
+       check_duplicates(get_strings p)
+    end
 
-
-val test8 = all_answers (fn x => if x = 1 then SOME [x] else NONE) [2,3,4,5,6,7]
-
-
-
+(* 11. *)
+fun match (valu, pattern) = 
+    case pattern of 
+          Variable str => SOME [(str, valu)]
+        | TupleP ps => SOME []
+        | ConstP x =>  SOME []
+        | Wildcard =>  SOME []
+        | UnitP    =>  SOME []
+        | ConstructorP(str,p) => SOME []
+        | _ => NONE
