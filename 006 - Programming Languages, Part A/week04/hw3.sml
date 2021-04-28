@@ -114,14 +114,3 @@ fun check_pat p =
     in 
        check_duplicates(get_strings p)
     end
-
-(* 11. *)
-fun match (valu, pattern) = 
-    case pattern of 
-          Variable str => SOME [(str, valu)]
-        | TupleP ps => SOME []
-        | ConstP x =>  SOME []
-        | Wildcard =>  SOME []
-        | UnitP    =>  SOME []
-        | ConstructorP(str,p) => SOME []
-        | _ => NONE
