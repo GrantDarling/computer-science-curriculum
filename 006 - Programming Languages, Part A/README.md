@@ -15,7 +15,7 @@ Statically-Typed programming languages, Polymorphic Functions etc.
 * Ensure you have Standard ML installed on your operating system: https://www.smlnj.org/
 * Go to the week of the program you want to run within your terminal
 * Run the 'sml' command with whatever file you wish to run.
-* Example:
+Example:
 ```
 sml hw3test.sml
 ```
