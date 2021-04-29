@@ -8,7 +8,7 @@ to make you more effective programming in any language -- and in learning new on
 **Topics Covered in part A: **
 
 Identifying programming Syntax, Semantics and Idioms, Functional Programming (Recursion, Currying, Higher-Order Functions, Pattern Matching, Closures etc.),
-Staticlly-Typed programming languages, Polymorphic Functions etc.
+Statically-Typed programming languages, Polymorphic Functions etc.
 
 ### Executing program
 
