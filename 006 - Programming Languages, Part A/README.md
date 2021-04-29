@@ -5,7 +5,7 @@ This is an intermediate level course with an introduction to the basic concepts 
 The course uses the languages Standard ML, Racket, and Ruby as vehicles for teaching the concepts, but the real intent is to teach enough about how any language “fits together” 
 to make you more effective programming in any language -- and in learning new ones.
 
-### Topics Covered in part A:
+### Topics Covered in part A
 
 Identifying programming Syntax, Semantics and Idioms, Functional Programming (Recursion, Currying, Higher-Order Functions, Pattern Matching, Closures etc.),
 Statically-Typed programming languages, Polymorphic Functions etc.
