@@ -1,6 +1,4 @@
-# Course Title
-
-Programming Languages, Part A
+# Programming Languages, Part A
 
 ## Description
 This is an intermediate level course with an introduction to the basic concepts of programming languages, with a strong emphasis on functional programming. 
