@@ -120,16 +120,14 @@
 (define mupl-map
   (fun #f "f" (fun "loop" "xs" (ifgreater 
                     (isaunit (var "xs")) 
-                    (int 0)
-                    (aunit)
-                    (apair
-                     (call (var "f") (fst (var "xs")))
-                     (call (var "loop") (snd (var "xs"))))))))
+                    (int 0) (aunit)
+                    (apair (call (var "f") (fst (var "xs"))) (call (var "loop") (snd (var "xs"))))))))
 
 (define mupl-mapAddN 
   (mlet "map" mupl-map
-        (fun #f "i"
-             (call (var "map") (fun #f "x" (add (var "x") (var "i")))))))
+        (fun #f "i" (call (var "map") (fun #f "x" (add (var "x") (var "i")))))))
+
+(eval-exp (call (call mupl-map (fun #f "x" (add (var "x") (int 7)))) (apair (int 1) (aunit)))) 
 
 ;; Challenge Problem
 
