@@ -21,8 +21,6 @@ class MyPiece < Piece
 
   # your enhancements here
   def self.next_piece (board)
-    puts "this"
-    puts All_My_Pieces.sample
     MyPiece.new(All_My_Pieces.sample, board)
   end
 
@@ -36,6 +34,27 @@ class MyBoard < Board
     @score = 0
     @game = game
     @delay = 500
+    @cheated = false
+  end
+
+  def score=(score)
+    @score = score
+  end
+
+  def current_pos
+    @current_pos
+  end
+
+  def current_block=(current_block)
+    @current_block = current_block
+  end
+
+  def cheated
+    @cheated
+  end
+
+  def cheated=(cheated)
+    @cheated = cheated
   end
 
   # rotates the current piece 180 degrees
@@ -49,6 +68,7 @@ class MyBoard < Board
  def next_piece
     @current_block = MyPiece.next_piece(self)
     @current_pos = nil
+    @cheated = false
   end
 
 end
@@ -62,9 +82,15 @@ end
 
 class MyTetris < Tetris
   # your enhancements here
+  def initialize
+    super 
+    #@cheated = true
+  end
+
   def key_bindings
     super
     @root.bind('u', proc {@board.rotate_one_eighty})
+    @root.bind('c', proc {cheat})
   end
 
   def set_board
@@ -75,20 +101,15 @@ class MyTetris < Tetris
     @board.draw
   end
 
-  def draw_piece (piece, old=nil)
-    if old != nil and piece.moved
-      old.each{|block| block.remove}
-    end
-    size = @board.block_size
-    blocks = piece.current_rotation
-    start = piece.position
-    blocks.map{|block| 
-    MyTetrisRect.new(@canvas, start[0]*size + block[0]*size + 3, 
-                       start[1]*size + block[1]*size,
-                       start[0]*size + size + block[0]*size + 3, 
-                       start[1]*size + size + block[1]*size, 
-                       piece.color)}
+  def cheat 
+     if @board.score > 10 && @board.cheated == false
+        @board.cheated = true
+        @board.score = @board.score - 10
+        @board.current_pos.each{|block| block.remove}
+        @board.current_block = MyPiece.new(([[[0, 0], [0, 0], [0, 0], [0, 0]]]), @board)
+       #MyPiece.new(([[0, 0], [0, 0], [0, 0], [0, 0]]), @board)
+     else 
+        puts "score is under 10 or has cheated"
+     end
   end
-
-
 end
