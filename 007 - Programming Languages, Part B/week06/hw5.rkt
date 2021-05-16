@@ -97,9 +97,12 @@
                [else (int 0)])]
         [#t (begin (print e) (error "bad MUPL expression"))]))
 
+
 ;; Do NOT change
 (define (eval-exp e)
   (eval-under-env e null))
+
+(eval-exp (call (closure '() (fun #f "x" (add (var "x") (int 7)))) (int 1)))
         
 ;; Problem 3
 
@@ -126,8 +129,6 @@
 (define mupl-mapAddN 
   (mlet "map" mupl-map
         (fun #f "i" (call (var "map") (fun #f "x" (add (var "x") (var "i")))))))
-
-(eval-exp (call (call mupl-map (fun #f "x" (add (var "x") (int 7)))) (apair (int 1) (aunit)))) 
 
 ;; Challenge Problem
 
