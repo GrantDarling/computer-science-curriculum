@@ -1,4 +1,4 @@
-upup===============================================================================
+===============================================================================
 =    W e l c o m e   t o   t h e   V I M   T u t o r    -    Version 1.5      =
 ===============================================================================
 
@@ -461,7 +461,7 @@ Note: This is very useful in debugging a program with unmatched parentheses!
 
   1. Move the cursor to the line below marked --->.
 
-  2. Type  :s/thee/the <ENTER> .  Note that this command only changes the
+  2. Type  :s/the/the <ENTER> .  Note that this command only changes the
      first occurrence on the line.
 
   3. Now type	 :s/thee/the/g	   meaning substitute globally on the line.
@@ -655,7 +655,7 @@ Note: This avoids typing  i , the last character, the text to insert, <ESC>,
   3. Now complete the first line.  Note also that append is exactly the same
      as Insert mode, except for the location where text is inserted.
 
----> This line will allow you to practice
+---> This line will allow you to practice appending text to the end of a line.
 ---> This line will allow you to practice appending text to the end of a line.
 
 
@@ -674,7 +674,7 @@ Note: This avoids typing  i , the last character, the text to insert, <ESC>,
   3. Now type  R  and replace the remainder of the text on the first line by
      typing over the old text to make the first line the same as the second.
 
----> To make the first line the same as the last on this page use the keys.
+---> To make the first line the same as the second, type R and the new text. 
 ---> To make the first line the same as the second, type R and the new text.
 
   4. Note that when you press <ESC> to exit, any unaltered text remains.
