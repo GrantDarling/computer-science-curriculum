@@ -56,10 +56,10 @@ class MyBoard < Board
   end
 
   def cheat 
-     if @score > 100
+     if @score >= 100
         @score = @score - 100
-        @current_pos.each{|block| block.remove}
         @current_block = MyPiece.new([[[0, 0]]], self)
+        @current_pos = nil
      end
   end
 
