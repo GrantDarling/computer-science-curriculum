@@ -20,6 +20,10 @@ class MyPiece < Piece
   def self.next_piece (board)
     MyPiece.new(All_My_Pieces.sample, board)
   end
+
+  def self.cheat_piece (board)
+    MyPiece.new([[0,0]], board)
+  end
 end
 
 class MyBoard < Board
@@ -38,8 +42,13 @@ class MyBoard < Board
     draw
   end
 
- def next_piece
-    @current_block = MyPiece.next_piece(self)
+  def next_piece
+    if @cheat
+      @current_block = MyPiece.cheat_piece(self)
+      @cheat = false
+    else
+      @current_block = MyPiece.next_piece(self)
+    end
     @current_pos = nil
   end
 
@@ -55,12 +64,11 @@ class MyBoard < Board
     @delay = [@delay - 2, 80].max
   end
 
-  def cheat 
-     if @score >= 100
-        @score = @score - 100
-        @current_block = MyPiece.new([[[0, 0]]], self)
-        @current_pos = nil
-     end
+  def cheat
+    if score >= 100 and !@cheat
+      @cheat = true
+      @score -= 100
+    end
   end
 
 end
