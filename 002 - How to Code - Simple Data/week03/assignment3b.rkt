@@ -1,3 +1,6 @@
+(require 2htdp/image)
+(require 2htdp/universe)
+
 
 (define-struct pos (x y))
 
@@ -186,7 +189,251 @@
 ; 
 
 
+;; =================
+;; Constants
+
+(define WIDTH 400)
+(define HEIGHT 200)
+
+(define CTR-Y (/ HEIGHT 2))
+
+(define RCOW . )
+(define LCOW .)
+
+(define MTS (empty-scene WIDTH HEIGHT))
+
+;; =================
+;; Data Definition
+
+(define-struct cow(x dx))
+;; Cow is (make-cow Natural[0, WIDTH], Integer)
+;; Interp. (make-cow c dx) is a cow with a x coordinate x and velocity dx
+;;         the x is the center of the cow
+;;         x is in screen coordinates (pixels_
+;;         dx is in pixels per tick
+;;
+(define C1 (make-cow 10  3)) ; at 10, moving left -> right
+(define C2 (make-cow 20 -3)) ; at 20, moving right -> left
+
+(define (fn-for-cow c)
+  (... (cow-x c)    ;Natural[0, WIDTH]
+       (cow-dx c))) ;Integer
+
+;; Template rules used:
+;;  - compound: 2 fields
 
 
+;; =================
+;; Functions:
+
+;; Cow -> Cow
+;; called to make the cow go for a walk; start with (main (make-cow 0 3))
+;; no tests for main function
+(define (main c)
+  (big-bang c
+            (on-tick next-cow)       ; Cow -> Cow
+            (to-draw render-cow)     ; Cow -> Image
+            (on-key  handle-key)))   ; Cow KeyEvent -> Cow
+
+
+
+;; Cow -> Cow  
+;; increase cow x by dx; when gets to edge, change dir and move off by 1
+(check-expect (next-cow (make-cow 20           3)) (make-cow (+ 20 3)  3)) ;away from edges
+(check-expect (next-cow (make-cow 20          -3)) (make-cow (- 20 3) -3))
+
+(check-expect (next-cow (make-cow (- WIDTH 3)  3)) (make-cow WIDTH     3)) ;reaches edge
+(check-expect (next-cow (make-cow 3           -3)) (make-cow 0        -3))
+
+(check-expect (next-cow (make-cow (- WIDTH 2)  3)) (make-cow WIDTH    -3)) ;tries to pass edge
+(check-expect (next-cow (make-cow 2           -3)) (make-cow 0         3)) 
+
+;(define (next-cow c) c)      ;stub
+
+(define (next-cow c)
+  (cond [(> (+ (cow-x c) (cow-dx c)) WIDTH) (make-cow WIDTH (- (cow-dx c)))]
+        [(< (+ (cow-x c) (cow-dx c)) 0)     (make-cow 0     (- (cow-dx c)))]
+        [else
+         (make-cow (+ (cow-x c) (cow-dx c))
+                   (cow-dx c))]))
+
+
+;; Cow -> Image
+;; place appropriate cow image on MTS at (cow-x c) and CTR-Y
+(check-expect (render-cow (make-cow 99 3))
+              (place-image RCOW 99 CTR-Y MTS))
+(check-expect (render-cow (make-cow 33 -3))
+              (place-image LCOW 33 CTR-Y MTS))
+
+(define (render-cow c)
+  (place-image (choose-image c) (cow-x c) CTR-Y MTS))
+
+;; Cow -> Image
+;; produce RCOW or LCOW depending on the direction cow is going
+(check-expect (choose-image (make-cow 10  3)) RCOW)
+(check-expect (choose-image (make-cow 11 -3)) LCOW)
+(check-expect (choose-image (make-cow 11  0)) LCOW)
+
+(define (choose-image c)
+  (if (> (cow-dx c) 0)
+      RCOW
+      LCOW))
+
+
+
+; PROBLEM:
+; 
+; In this problem, we will design an animation of throwing a water balloon.  
+; When the program starts the water balloon should appear on the left side 
+; of the screen, half-way up.  Since the balloon was thrown, it should 
+; fly across the screen, rotating in a clockwise fashion. Pressing the 
+; space key should cause the program to start over with the water balloon
+; back at the left side of the screen. 
+; 
+; NOTE: Please include your domain analysis at the top in a comment box. 
+; 
+; Use the following images to assist you with your domain analysis:
+; 
+; ** already copied **
+; 
+; Here is an image of the water balloon:
+; (define WATER-BALLOON.)
+; 
+; 
+; 
+; NOTE: The rotate function wants an angle in degrees as its first 
+; argument. By that it means Number[0, 360). As time goes by your balloon 
+; may end up spinning more than once, for example, you may get to a point 
+; where it has spun 362 degrees, which rotate won't accept. 
+; 
+; The solution to that is to use the modulo function as follows:
+; 
+; (rotate (modulo ... 360) (text "hello" 30 "black"))
+; 
+; where ... should be replaced by the number of degrees to rotate.
+; 
+; NOTE: It is possible to design this program with simple atomic data, 
+; but we would like you to use compound data.
+
+
+
+;; Problem Domain
+
+; 
+; 
+; 1)
+; 2).
+; .
+; 3)
+; .
+; 4)
+; 
+; .
+; 
+; Constants:
+; WIDTH
+; HEIGHT
+; Y-CTR
+; SPEED
+; ROTATION
+; BALLOON_IMG
+; 
+; Changing:
+; ballon-rotation
+; balloon-position
+; 
+; Events:
+; on-tick
+; on-render
+; on-key
+; 
+;     
+
+
+;; Toss a balloon program
+
+;; =================
+;; Constants
+
+(define WIDTH2 600)
+(define HEIGHT2 400)
+
+(define CTR-Y2 (/ HEIGHT 2))
+(define MTS2 (empty-scene WIDTH2 HEIGHT2))
+
+(define SPEED2 3)
+(define ROTATION2 10)
+(define BALLOON-IMG  .)
+
+;; =================
+;; Data Definitions
+
+(define-struct balloon (position rotation))
+;; Balloon is (make-balloon Number Number[0, 360])
+;; interp. a balloon with a x-position and rotaion
+
+(define B1 (make-balloon 0 270))
+(define B2 (make-balloon (/ WIDTH2 2) 180))
+
+#;
+(define (fn-for-balloon b)
+  (... (balloon-position b)     ;Number
+       (balloon-rotation b)))   ;Number[0, 360]
+;; Template rules used:
+;;  - compound: 2 fields
+
+;; =================
+;; Functions:
+
+;; Balloon -> Balloon
+;; start the world with (main2 (make-balloon 0 0)) 
+;; 
+(define (main2 b)
+  (big-bang b                            ; Balloon
+            (on-tick   advance-balloon)  ; Balloon -> Balloon
+            (to-draw   render)           ; Balloon -> Image
+            (on-key    handle-key)))     ; Balloon KeyEvent -> Balloon
+
+;; Balloon -> Balloon
+;; produce the next balloon being tossed
+(check-expect (advance-balloon (make-balloon  0 270)) (make-balloon (+ SPEED2 0) (+ ROTATION2 270)))
+(check-expect (advance-balloon (make-balloon 50 360)) (make-balloon (+ SPEED2 50) (+ ROTATION2 0)))
+
+(define (advance-balloon b)
+  (make-balloon (move-balloon b) (rotate-balloon b)))
+
+;; Balloon -> Number[0, 360]
+;; rotates the balloon, not surpassing 360 by ROTATION2
+(check-expect (rotate-balloon (make-balloon  0 360))  (+ 0 ROTATION2))
+(check-expect (rotate-balloon (make-balloon  0 330))                0)
+
+(define (rotate-balloon b) (modulo (+ (balloon-rotation b) ROTATION2) 360))
+
+;; Balloon -> Number
+;; Move the balloon by adding SPEED2
+(check-expect (move-balloon (make-balloon  0 360))    (+   0 SPEED2))
+(check-expect (move-balloon (make-balloon  570 330))  (+ 570 SPEED2))
+
+(define  (move-balloon b) (+ (balloon-position b) SPEED2))
+
+;; Balloon -> Image
+;; render the balloon image
+(check-expect (render (make-balloon 0 0))
+              (place-image (rotate ROTATION2 BALLOON-IMG) SPEED2 CTR-Y2 MTS2))
+(check-expect (render (make-balloon 330 50))
+              (place-image (rotate (+ 50 ROTATION2) BALLOON-IMG) (+ 330 SPEED2) CTR-Y2 MTS2))
+
+(define (render b)
+  (place-image (rotate (rotate-balloon b) BALLOON-IMG) (move-balloon b) CTR-Y2 MTS2))
+
+(rotate 40 BALLOON-IMG)
+
+;; Balloon KeyEvent -> Balloon
+;; Restart the balloon toss
+(check-expect (handle-key (make-balloon 50 360) " ") (make-balloon 0 0))
+(check-expect (handle-key (make-balloon 50 360) "a") (make-balloon 50 360))
+(define (handle-key b ke)
+  (cond [(key=? ke " ") (make-balloon 0 0)]
+        [else b]))
 
 
