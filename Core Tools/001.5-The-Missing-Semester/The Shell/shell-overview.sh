@@ -101,24 +101,13 @@ exit #! moves you back to user
 id -un #! shows the current user 
 
 
-
-
-
-
-
-
-
-# change mac capslock keys
+#! MISC !#
+### change mac capslock keys ###
 # https://github.com/busyloop/maclight
 maclight --help
-maclight keyboard set --all 1
-maclight keyboard set --all 0
+maclight keyboard set --all 1 #! sets caplock key light
+maclight keyboard set --all 0 #! removes caplock key light
 
-#binding keys 
-bind '"\e[24~":"pwd\n"'
-# binds f12 to a specific command
-#-- --#
-
-
-
+### binding keys ### 
+bind '"\e[24~":"pwd\n"' #! binds f12 to a specific command in terminal (pwd)
 
