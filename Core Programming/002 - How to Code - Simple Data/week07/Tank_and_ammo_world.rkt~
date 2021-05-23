@@ -1,6 +1,6 @@
 ;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname space-invadors-Ammo) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+#reader(lib "htdp-beginner-abbr-reader.ss" "lang")((modname Tank_and_ammo_world) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
 (require 2htdp/universe)
 (require 2htdp/image)
 
@@ -31,29 +31,28 @@
 
 ;; Data definitions:
 
-(define-struct ammo (x y b))
-;; Ammo is (make-ammo Natural[0, WIDTH] Natural[0, HEIGHT] Boolean)
-;; interp. some ammo at position x, y or false for non-existent
+;; Ammo is one of:
+;;  - Integer[0, HEIGHT]
+;;  - false
+;; interp. the y coordinate of the tanks ammo Integer[0, HEIGHT] or none existent
 
-(define A1 (make-ammo AMMO-X HEIGHT true))       ;start
-(define A2 (make-ammo AMMO-X (/ HEIGHT 2) true)) ;middle 
-(define A3 (make-ammo AMMO-X 0 true))            ;end
-(define A4 (make-ammo AMMO-X 0 false))           ;non-existent
+(define A1            0)  ; start
+(define A2 (/ 2 HEIGHT))  ; middle
+(define A3       HEIGHT)  ; end
+(define A4        false)  ; non-existent
 
 #;
 (define (fn-for-ammo a)
-  (... (ammo-x a)     ;Natural[0, WIDTH]
-       (ammo-y a)     ;Natural[0, HEIGHT]
-       (ammo-b a)))   ;Boolean
+  (cond [(string=? "false" a) (...)]
+        [(and (> a 0) (< a HEIGHT)) (... a)]))
+
 ;; Template rules used:
-;;  - compound: 3 fields
-;;  - atomic non-distinct: Integer[0, WIDTH]
+;;  - one of: 2 cases
 ;;  - atomic non-distinct: Integer[0, HEIGHT]
 ;;  - atomic distinct: "false"
 
-
-
-
+;; Template rules used:
+;;  - atomic non-distinct: Integer[0, HEIGHT]
 
 ;; Tank is Integer[0, WIDTH]
 ;; interp. the x coordinate of the tanks position
@@ -73,55 +72,49 @@
 
 ;; Tank -> Tank
 ;; start the world with initial state t, for example: (main TANK-X AMMO-Y)
-;(define (main t)
-;  (big-bang t                  ; Tank
-;    (to-draw   render)         ; Tank -> Image
-;    (on-key    move-tank)))    ; Tank KeyEvent -> Tank   
+(define (main t)
+  (big-bang t                  ; Tank
+    (to-draw   render)         ; Tank -> Image
+    (on-key    move-tank)))    ; Tank KeyEvent -> Tank   
 
 ;; Ammo -> Ammo
-;; start the world with initial state a, for example: (main (make-ammo AMMO-X AMMO-Y true))
-(define (main a)
-  (big-bang a                  ; Ammo
-    (on-tick   advance-ammo)   ; Ammo -> Ammo
-    (to-draw    render-ammo)   ; Ammo -> Image
-    (on-key  restart-ammo)))   ; Ammo KeyEvent -> Ammo
-
+;; start the world with initial state a, for example: (main AMMO-Y)
+;(define (main a)
+;  (big-bang a                  ; Ammo
+;    (on-tick   advance-ammo)   ; Ammo -> Ammo
+;    (to-draw    render-ammo)   ; Ammo -> Image
+;    (on-key  restart-ammo)))   ; Ammo KeyEvent -> Ammo
 
 ;; Ammo -> Ammo
 ;; produce the next ammo position
-;(define A1 (make-ammo AMMO-X HEIGHT true))            ;start
-;(define A2 (make-ammo AMMO-X (/ HEIGHT 2) true)) ;middle 
-;(define A3 (make-ammo AMMO-X 0 true))       ;end
-;(define A4 (make-ammo AMMO-X 0 false))      ;non-existent
-
-(check-expect (advance-ammo A1) (make-ammo AMMO-X (- HEIGHT AMMO-SPEED) true))
-(check-expect (advance-ammo A2) (make-ammo AMMO-X (- (/ HEIGHT 2) AMMO-SPEED) true))
-(check-expect (advance-ammo A3) (make-ammo AMMO-X 0 false))
-(check-expect (advance-ammo A4) (make-ammo AMMO-X 0 false))
+(check-expect (advance-ammo HEIGHT)           (- HEIGHT AMMO-SPEED))
+(check-expect (advance-ammo (/ WIDTH 2)) (- (/ WIDTH 2) AMMO-SPEED))
+(check-expect (advance-ammo 0)                                false)
+(check-expect (advance-ammo AMMO-SPEED)                           0)
 
 (define (advance-ammo a)
-  (cond [(and (<= (ammo-y a) HEIGHT) (>= (ammo-y a) AMMO-SPEED)) (make-ammo AMMO-X (- (ammo-y a) AMMO-SPEED) true)]
-        [else (make-ammo AMMO-X 0 false)]))
+  (cond [(and (number? a) (<= a HEIGHT) (>= a AMMO-SPEED)) (- a AMMO-SPEED)]
+        [else false]))
 
 ;; Ammo -> Image
 ;; render the ammo position 
-(check-expect (render-ammo A1) (place-image AMMO-IMG AMMO-X (ammo-y A1) MTS))
-(check-expect (render-ammo A2) (place-image AMMO-IMG AMMO-X (ammo-y A2) MTS))
-(check-expect (render-ammo A3) (place-image AMMO-IMG AMMO-X (ammo-y A3) MTS))
+(check-expect (render-ammo A1) (place-image AMMO-IMG AMMO-X A1 MTS))
+(check-expect (render-ammo A2) (place-image AMMO-IMG AMMO-X A2 MTS))
+(check-expect (render-ammo A3) (place-image AMMO-IMG AMMO-X A3 MTS))
 (check-expect (render-ammo A4) MTS)
 
-(define (render-ammo a) (if (ammo-b a)
-                            (place-image AMMO-IMG AMMO-X (ammo-y a) MTS)
+(define (render-ammo a) (if (number? a)
+                            (place-image AMMO-IMG AMMO-X a MTS)
                             MTS))
 
 ;; Ammo KeyEvent -> Ammo
 ;; restart the ammo position
-(check-expect (restart-ammo A2 "left")  (make-ammo AMMO-X (/ HEIGHT 2) true))
-(check-expect (restart-ammo A2 " ")     (make-ammo AMMO-X AMMO-Y true))
+(check-expect (restart-ammo A3 "left")    A3)
+(check-expect (restart-ammo A3 " ")   AMMO-Y)
 
 (define (restart-ammo a a-key)
   (cond
-    [(key=? a-key " ")  (make-ammo AMMO-X AMMO-Y true)]
+    [(key=? a-key " ")  AMMO-Y]
     [else a]))
 
 
