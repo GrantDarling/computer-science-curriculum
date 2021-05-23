@@ -53,47 +53,74 @@
 
 
 
+(define-struct tank (x y))
+;; Tank is (make-tank Natural[0, WIDTH] Natural[TANK-Y])
+;; interp. a tank at position x, y
 
-
-;; Tank is Integer[0, WIDTH]
-;; interp. the x coordinate of the tanks position
-(define T1           0)  ; start
-(define T2 (/ 2 WIDTH))  ; middle
-(define T3       WIDTH)  ; end
+(define T1 (make-tank 0 TANK-Y))           ;start
+(define T2 (make-tank (/ 2 WIDTH) TANK-Y)) ;middle 
+(define T3 (make-tank WIDTH TANK-Y))       ;end
  
-#;
-(define (fn-for-tank t)
-  (... t))
+(define (fn-for-ammo t)
+  (... (tank-x t)      ;Natural[0, WIDTH]
+       (tank-y t)))    ;Natural[TANK-Y]
 
 ;; Template rules used:
+;;  - compound: 2 fields
 ;;  - atomic non-distinct: Integer[0, WIDTH]
+;;  - atomic non-distinct: Integer[TANK-Y]
 
 
 ;; Functions:
 
 ;; Tank -> Tank
-;; start the world with initial state t, for example: (main TANK-X AMMO-Y)
-;(define (main t)
-;  (big-bang t                  ; Tank
-;    (to-draw   render)         ; Tank -> Image
-;    (on-key    move-tank)))    ; Tank KeyEvent -> Tank   
+;; start the world with initial state t, for example: (main (make-tank TANK-X TANK-Y))
+(define (main t)
+  (big-bang t                  ; Tank
+    (to-draw   render)         ; Tank -> Image
+    (on-key    move-tank)))    ; Tank KeyEvent -> Tank
+
+;; Tank -> Tank
+;; Produce tank at next position
+
+;(define T1 (make-tank 0 TANK-Y))           ;start
+;(define T2 (make-tank (/ 2 WIDTH) TANK-Y)) ;middle 
+;(define T3 (make-tank WIDTH TANK-Y))       ;end
+(define T4 (make-tank 14 TANK-Y))  
+
+(check-expect (move-tank T1 "left")   (make-tank (+ 0 (/ TANK-SIZE 2)) TANK-Y))
+(check-expect (move-tank T2 "right")  (make-tank (+ TANK-SPEED (tank-x T2)) TANK-Y))
+(check-expect (move-tank T3 "left")   (make-tank  (- (tank-x T3) TANK-SPEED) TANK-Y))
+(check-expect (move-tank T3   "up")                                               T3)
+(check-expect (move-tank T4 "left")   (make-tank (+ 0 (/ TANK-SIZE 2)) TANK-Y))            
+(check-expect (move-tank (make-tank (- WIDTH 10) TANK-Y) "right")  (make-tank (- WIDTH (/ TANK-SIZE 2)) TANK-Y))
+
+(define (move-tank t a-key)
+  (cond
+    [(key=? a-key "left")  (if (<= (tank-x t) TANK-SPEED)
+                               (make-tank (+ 0 (/ TANK-SIZE 2)) TANK-Y)
+                               (make-tank (- (tank-x t) TANK-SPEED) TANK-Y))]
+    [(key=? a-key "right") (if (>= (tank-x t) (- WIDTH TANK-SPEED))
+                               (make-tank (- WIDTH (/ TANK-SIZE 2)) TANK-Y)
+                               (make-tank (+ (tank-x t) TANK-SPEED) TANK-Y))]
+    [else t]))
+
+;; Tank -> Image
+;; produce image with TANK-IMG placed on MTS at proper x, y position
+(check-expect (render T1) (place-image TANK-IMG (tank-x T1) TANK-Y MTS))
+
+(define (render t) (place-image TANK-IMG (tank-x t) TANK-Y MTS))
 
 ;; Ammo -> Ammo
 ;; start the world with initial state a, for example: (main (make-ammo AMMO-X AMMO-Y true))
-(define (main a)
-  (big-bang a                  ; Ammo
-    (on-tick   advance-ammo)   ; Ammo -> Ammo
-    (to-draw    render-ammo)   ; Ammo -> Image
-    (on-key  restart-ammo)))   ; Ammo KeyEvent -> Ammo
-
+;(define (main a)
+;  (big-bang a                  ; Ammo
+;    (on-tick   advance-ammo)   ; Ammo -> Ammo
+;    (to-draw    render-ammo)   ; Ammo -> Image
+;    (on-key  restart-ammo)))   ; Ammo KeyEvent -> Ammo
 
 ;; Ammo -> Ammo
 ;; produce the next ammo position
-;(define A1 (make-ammo AMMO-X HEIGHT true))            ;start
-;(define A2 (make-ammo AMMO-X (/ HEIGHT 2) true)) ;middle 
-;(define A3 (make-ammo AMMO-X 0 true))       ;end
-;(define A4 (make-ammo AMMO-X 0 false))      ;non-existent
-
 (check-expect (advance-ammo A1) (make-ammo AMMO-X (- HEIGHT AMMO-SPEED) true))
 (check-expect (advance-ammo A2) (make-ammo AMMO-X (- (/ HEIGHT 2) AMMO-SPEED) true))
 (check-expect (advance-ammo A3) (make-ammo AMMO-X 0 false))
@@ -123,30 +150,3 @@
   (cond
     [(key=? a-key " ")  (make-ammo AMMO-X AMMO-Y true)]
     [else a]))
-
-
-;; Tank -> Tank
-;; Produce tank at next position
-
-(check-expect (move-tank T1 "left")                 (+ 0 (/ TANK-SIZE 2)))
-(check-expect (move-tank T2 "right")                    (+ TANK-SPEED T2))
-(check-expect (move-tank T3 "left")                     (- T3 TANK-SPEED))
-(check-expect (move-tank T3   "up")                                    T3)
-(check-expect (move-tank 14 "left")                 (+ 0 (/ TANK-SIZE 2)))
-(check-expect (move-tank (- WIDTH 10) "right")  (- WIDTH (/ TANK-SIZE 2)))
-
-(define (move-tank t a-key)
-  (cond
-    [(key=? a-key "left")  (if (<= t TANK-SPEED)
-                               (+ 0 (/ TANK-SIZE 2))
-                               (- t TANK-SPEED))]
-    [(key=? a-key "right") (if (>= t (- WIDTH TANK-SPEED))
-                               (- WIDTH (/ TANK-SIZE 2))
-                               (+ t TANK-SPEED))]
-    [else t]))
-
-;; Tank -> Image
-;; produce image with TANK-IMG placed on MTS at proper x, y position
-(check-expect (render T1) (place-image TANK-IMG T1 TANK-Y MTS))
-
-(define (render t) (place-image TANK-IMG t TANK-Y MTS))
