@@ -4,7 +4,7 @@
 (require 2htdp/universe)
 (require 2htdp/image)
 
-;; A Tanks that moves across the screen
+;; A cat that walks across the screen.
 
 ;; Constants:
 
@@ -15,7 +15,7 @@
 
 ;tank
 (define TANK-SPEED 50)
-(define TANK-SIZE 20)
+(define TANK-SIZE 40)
 (define TANK-Y (- HEIGHT TANK-SIZE))
 (define TANK-IMG (above 
                   (rectangle (/ TANK-SIZE 4) (/ TANK-SIZE 2) "solid" "black")
@@ -42,19 +42,23 @@
 ;; Tank -> Tank
 ;; start the world with initial state t, for example: (main (/ WIDTH 2))
 (define (main t)
-  (big-bang t                  ; Tank
+  (big-bang t                          ; Tank
+    ;(on-tick   tock)
     (to-draw   render)         ; Tank -> Image
     (on-key    move-tank)))    ; Tank KeyEvent -> Tank     
+
+;!!!
+;(define (tock t) t)  ;stub
 
 ;; Tank -> Tank
 ;; Produce tank at next position
 
-(check-expect (move-tank T1 "left")                 (+ 0 (/ TANK-SIZE 2)))
-(check-expect (move-tank T2 "right")                    (+ TANK-SPEED T2))
-(check-expect (move-tank T3 "left")                     (- T3 TANK-SPEED))
-(check-expect (move-tank T3   "up")                                    T3)
-(check-expect (move-tank 14 "left")                 (+ 0 (/ TANK-SIZE 2)))
-(check-expect (move-tank (- WIDTH 10) "right")  (- WIDTH (/ TANK-SIZE 2)))
+(check-expect (move-tank T1 "left")                     0)
+(check-expect (move-tank T2 "right")    (+ TANK-SPEED T2))
+(check-expect (move-tank T3 "left")     (- T3 TANK-SPEED))
+(check-expect (move-tank T3   "up")                    T3)
+(check-expect (move-tank 14 "left")                     0)
+(check-expect (move-tank (- WIDTH 10) "right")      WIDTH)
 
 (define (move-tank t a-key)
   (cond
@@ -69,5 +73,4 @@
 ;; Tank -> Image
 ;; produce image with TANK-IMG placed on MTS at proper x, y position
 (check-expect (render T1) (place-image TANK-IMG T1 TANK-Y MTS))
-
 (define (render t) (place-image TANK-IMG t TANK-Y MTS))
