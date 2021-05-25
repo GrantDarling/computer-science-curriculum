@@ -1,0 +1,45 @@
+Data in one format -> Another format (pipe operator, graph or stats over data)
+
+Need a data source to operate on (webscraping, parse html/JSON). In-class example is a system log (extracting data)
+Can take a grep command and do it server-side by wrapping the entire command in the call to server command (ie: 'ssh tsp 'command | command | ...')
+sed (derived from 'ed' ), is a Regular Expression. It allows you to make changes to the content of a stream. Most common is the run 'replacement' expressions. 
+
+sed 's/. *Disconnected from//' <- replace everything and including Disconnected from with '' (second argument is empty)
+
+sed 's/[ab]//' <- replace everything in the pattern with a and b with nothing. Only applies this once!
+sed 's/[ab]//g' <- replace this as many times as necessary
+sed -E 's/(ab)*//g' <- I want 0 or more of the string 'ab'. You need -E because it's an old tool
+sed -E 's/(ab|bc)*//g'<- removes 'ab' or 'bc'
+
+It is very helpful to use a regex debugger: https://regex101.com/
+
+Capture Group: I want to remember this value and re-use it later. Any '()' expression can be refered back to in the replacement and return just the value you captured.
+Complicated regex should be double checked to make sure it actually works. You might drop data points in a chart etc. but wont usually be used in things that are security related. 
+
+wc -l <- word count program. Return the total amount of lines
+
+sort <- takes a bunch of lines of input, sorts it and returns the output
+sort | unique <- only prints those that are unique
+sort | unique -c <- count the number of lines that are duplicated and then print beside the line (ie: '12 yeo')
+sort | unique -c | sort -nk1,1 | tail -n10 <- '-n' is numeric sort (again) '-k' is start at the first column and stop at the 1st column. Just give us the last 10 lines
+
+Now that giant log file produces useful information that we wanted (A top 10 list of usernames that have tried to log into our server)
+Can now disable root for ssh login (which is recommended) because we can see that people have tried to hack the server with that username
+
+How could we create a comma seperated list? 
+
+... awk '{print $2}' | past -sd <- awk is focused on column data (can be used like a programming language and replace all of these or track data as we loop through). This is saying 'print the second column of the username. Paste will paste the usernames with a , delimiter
+'leo, root, usuario...'
+
+echo "1 + 2" | bc -l <- uses arithmeatic expressions. We can use this to append a '+' to strings and then us bc !
+
+Command Line Argument Wrangling: 
+
+xargs <- takes lines of input and turns them into arguments. Super helpful to use the list of data (maybe with regex) to run a command over multiple arguments
+
+ffmpeg <- encoding and decoding video (and sometimes images)
+
+ffmpeg -loglevel panic -i /dev/video0 -frame 1 -f images2 - | convert - -colorspace gray - | gzip | ssh tsp 'gzip -d | tee copy.png' | feh -
+
+^ The above took the first frame of the video, created a grey filter, piped it to the server, gzipped it on the server (still there), then sent the image back and showed you it. (fucking insane)
+You could also pipe a video to someone elses server and they could pipe it into their video player to watch the video 
