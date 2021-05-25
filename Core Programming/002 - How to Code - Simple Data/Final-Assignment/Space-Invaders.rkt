@@ -462,7 +462,3 @@
 ; (define W4 (make-world T4 LOA4))
 ; 
 ; (define (CURRENT-TANK t) (make-tank (tank-x (world-tank t)) (tank-y (world-tank t))))                         ;define current tank
-
-
-
-
