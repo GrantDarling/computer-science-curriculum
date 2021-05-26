@@ -1,0 +1,82 @@
+Lesson: https://missing.csail.mit.edu/2020/version-control/
+
+Git Overview 
+
+|(root)             <- "tree" (folder)
+|
+|- foo              <- "tree" (folder)
+|   - bar.txt       <- "blob" (file)
+|
+|- baz              <- "tree" (folder)
+|   - bar.txt       <- "blob" (file)
+
+type blob   = array<bytes>
+type tree   = map<string, tree | blob>
+type commit = struct {
+                parents   = array<commits>
+                meta data = <author>, <message>, <snapshot> (tree)
+              } 
+type object  = blob | tree | commit
+type objects = map<string, object>
+
+Gits on-disk data store is essentially a content address store where objects are addressed by their hash. 
+Git does not store the objects within each commit but is using a pointer to reference the other objects.
+
+Git Commands 
+
+
+git init             <- initialize repo
+ls -a                <- shows the .git file
+.git                 <- stores all the objects and references
+git help 'x'         <- help for specific Commands
+git status           <- what is going on at a high level 
+git add <file>       <- tracks the file to be commited
+git commit           <- commits the currently tracked files
+git log              <- allows you to visualize the history (flattened history)
+git log              <- git logs as a graph (unflattened & more realistic)
+        --all 
+        --graph 
+        --decorate 
+git commit -a                 <- commits all files without needing to add all (already being tracked)
+git checkout <hash>           <- switches you to the git commit related to the hash
+git checkout master           <- !! (checkout moves head to different node but only deletes changes not committed)
+git diff                      <- shows what changed since the last snapshot 
+git branch                    <- prints all the branches in the repo 
+git branch -vv                <- prints additional info 
+git branch <branch name>      <- create a new reference to a branch where we are currently working 
+git checkout <branch name>    <- now head will just point to the branch (before it would point to (for example) HEAD->master,<branch-name>)
+git checkout -b <branch name> <- short form to create new branch and then checkout to that branch
+git log                       <- git logs as a graph (unflattened & more realistic) condensed into one line
+        --all 
+        --graph 
+        --decorate 
+        --oneline
+git merge <branch name>         <- opposite of branch (when on master, you can merge with a branch)
+git merge --abort               <- abort merge when a conflict occurs
+git mergetool                   <- helps resolve merge conflicts
+git merge --continue            <- after changes are made, you can continue with the merge
+git remotes                     <- prints the remotes involved with the git repo (ie: Github)
+git remote add origin           <- adds a remote 
+    <remote url | path>     
+git push                        <- pushes changes from your remote to remote   
+git push origin master:master   <- pushes changes from your remote master to a directory called master 
+git clone <remote url> <folder> <- clones repo from online source to your own copy on your local machine
+git fetch                       <- tells your local git to retrieve the latest meta-data info from the original (yet doesn't do any file transferring. It's more like just checking to see if there are any changes available)
+git pull                        <- get fetch; git merge (merges the repo to the local repo)
+~/.gitconfig                    <- git is highly configurable as well
+git clone --shallow             <- clones the repo without the commit history (great for large repos)
+git add -p <file>               <- creates interactive window to only add the commits you want 
+git diff --cached               <- shows the actually commit you will make 
+git blame                       <- shows commits made and by whom
+git ignore                      <- ignores certain files. Can use patterns like "*.py" or ".DS_Store"
+
+All these commands do is fetch objects from places, send objects to other places or mutate references to objects
+
+Why Git Add?
+allowing to git add before committing means you could add all the files from feature a and then commit. 
+Then adding all files for feature b. Also could only add changes that you need to add then throw away 
+the rest (without manually deleting them).
+
+
+
+
