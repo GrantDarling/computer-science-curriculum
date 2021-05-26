@@ -43,3 +43,4 @@ ffmpeg -loglevel panic -i /dev/video0 -frame 1 -f images2 - | convert - -colorsp
 
 ^ The above took the first frame of the video, created a grey filter, piped it to the server, gzipped it on the server (still there), then sent the image back and showed you it. (fucking insane)
 You could also pipe a video to someone elses server and they could pipe it into their video player to watch the video 
+parsing HTML? Use 'pup'. parsing JSON? Try 'jq'

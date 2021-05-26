@@ -1,0 +1,12 @@
+Lesson Questions: https://missing.csail.mit.edu/2020/data-wrangling/
+1. Completed interactive regex tutorial: https://regexone.com/
+2. cat /usr/share/dict/words | awk '$0 ~ /^(.*?a.*?[^s]){3}$/ { print $0 }' 
+3. s/REGEX/SUBSTITUTION/ input.txt > input.txt is a bad idea because it 
+   looks at the file 1 line at a time, not as  as a whole, so when you tranfer this back into the file, 
+   it only takes in the last argument (last line). According to 'man sed' you should use 'sed -i '' 's/find/replace/g' filename'
+4.  log show > logs.txt 
+    tail -n 10 logs.txt
+    no max bootup time in these logs...
+5. curl -s https://news.ycombinator.com/
+   curl -s https://news.ycombinator.com/ | pup 'table table tr:nth-last-of-type(n+2)'
+   curl -s https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm | pup 'table tr:nth-last-of-type(n+2)'
