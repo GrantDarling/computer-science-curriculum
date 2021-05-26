@@ -1,0 +1,59 @@
+Topics: 
+
+- Job Control 
+- Terminal Multiplexers
+- Dot Files
+- Remote Machines
+
+Job Control:
+
+sleep <int>
+sleep 20         <- process sleeps for 20 seconds 
+^C               <- exits the sleep. This is a signal. Shell sends a signal call SIGINT that abrupts the process 
+man SIGINT       <- many many signal and you can see them here 
+
+SIGSTOP(^Z)      <- Stops the signal and we can run a different program
+SIGCONT (bg %1)  <- continues the signal. Continues the first process 
+SIGQUIT(^\)      <- Like SIGINT but you can use to (for example) perform an action (save file) when a user hits SIGINT (^C) and then close. So SIGINT can be captured.
+SIGKILL          <- SIGKILL cannot be captured and will kill the program
+SIGHUP           <- Hangs up the connection (ie: shh connection)
+&                <- allows you to run a command but it runs in the background (super useful!) sleep 10 &
+jobs             <- see the jobs currently running 
+kill(%#)         <- allows you to kill a specific job (ie: kill %1)
+kill -STOP(%#)   <- using the kill just to suspend the job
+kill -HUP(%#)    <- hangs up the job
+bg               <- stands for backgrounded. It continues the signal in the background
+fg               <- stands for forgrounded. It continues the signal in the foreground
+
+Terminal Multiplexer (like tmux)
+
+tmux layout 
+- sessions 
+   - windows (like tabs)
+     - panes 
+
+tmux         <- basically creates multiple windows/panes for your terminal. Since MACOS has individual tabs I dont think this will be very useful
+
+Dot Files (config file):
+
+alias gs="git status"  <- convienent way to write this 
+alias mv="mv -i"       <- checks before you overwrite a file 
+alias sl=ls            <- good for typos
+alias gs               <- returns what the alias means irl
+.bashrc                <- this is a dot file. its like bash_source or zshrc configurable file 
+PS1="> "               <- makes "> " our command line icon
+PS1="\w > "            <- includes the working directory
+
+there are thousands of peoples config files on github. It can be more helpful to see peoples examples and why its good for their workflow.
+
+Remote Machines:
+
+ssh                           <- main command, 'secure shell', takes the resposnibility of reachig where we want it to go 
+ssh <user>@<ip address>
+ssh <user>@<DNS address>      <- ssh gcd@grantdarling.com
+                              <- can use this to execute commands to the remote machine 
+ssh-keys                      <- use so you no longer need to type your password everytime 
+scp                           <- copy but for ssh
+~/.ssh                        <- ssh dot file (configurable). Better than aliasing because other programs know about the ssh config
+
+More info about ssh: https://missing.csail.mit.edu/2020/command-line/
