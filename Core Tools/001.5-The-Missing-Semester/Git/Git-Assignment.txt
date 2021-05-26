@@ -1,0 +1,8 @@
+Lession Questions: https://missing.csail.mit.edu/2020/version-control/
+
+1. git clone https://github.com/missing-semester/missing-semester
+2. Anish Athalye <me@anishathalye.com> (ls; git log README.md)
+3. Redo lectures as a collection (git blame _config.yml; git show a88b4eac)
+4. git filter-branch
+5. done 
+6. created sample pull request to https://github.com/missing-semester/missing-semester
