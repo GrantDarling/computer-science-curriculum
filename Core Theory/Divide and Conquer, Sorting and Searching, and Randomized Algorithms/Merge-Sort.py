@@ -1,70 +1,36 @@
-list_a = [1,2,3,4,5]
+my_list = [7,10,11,33,55,9,7,10,11,33,55]
 
-list_b = [7,9,10]
+def merge(a, b, ls):
+    k, i, j = 0, 0, 0;
 
-def merge_sort(a, b):
-    c, i, j = [], 0, 0;
-
-    for _ in range(len(a + b)):
-        if i >= len(a):
-            c.append(b[j]);
+    for k in range(len(a + b)):
+        if i == len(a):
+            ls[k] = b[j];
             j += 1;
-        elif j >= len(b):
-            c.append(a[i]);
+        elif j == len(b):
+            ls[k] = a[i];
             i += 1;
         elif a[i] >= b[j]:
-            c.append(b[j]);
+            ls[k] = (b[j]);
             j += 1;
         elif a[i] < b[j]:
-            c.append(a[i]);
+            ls[k] = (a[i]);
             i += 1;
-
-    print(c)
-
-merge_sort(list_a, list_b)
-
-# # splits list in two
-# def split_list(full_list):
-#     half = len(full_list)//2
-#     return full_list[:half], full_list[half:]
-# list_a, list_b = split_list(full_list);
-
-
-
-
-
-
-# # sample list to be sorted 
-# full_list = [1,5,3,8,10,0]
-
-# def merge_sort(full_list):
-
-    # # splits list in two
-    # def split_list(full_list):
-    #     half = len(full_list)//2
-    #     return full_list[:half], full_list[half:]
-    # list_a, list_b = split_list(full_list);
-
-#     # [1, 5, 3, 8, 1, 4, 9]
-#     # recursively sort lists
-#     def sort_list(partial_list):
-#         if len(partial_list) <= 0:
-#             return;
-#         partial_list[0]
+        k+=1
     
-    
-#     print(sort_list(list_a))
-#     print(list_a)
+    return ls;
 
-# merge_sort(full_list)
+def merge_sort(ls):
+    if len(ls) > 2:
+        mid = len(ls)//2
+        left = ls[:mid]
+        right = ls[mid:]
 
+        merge_sort(left);
+        merge_sort(right);
 
-# testList = [];
+        return merge(left,right,ls)
 
-# def check():
-#     if len(testList) <= 0:
-#         print "stop"
-    
-# check();
-
+print(my_list)
+merge_sort(my_list)
 
