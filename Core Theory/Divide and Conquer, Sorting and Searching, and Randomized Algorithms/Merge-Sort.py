@@ -14,7 +14,7 @@ def merge(a, b, ls):
             ls[k] = (b[j]);
             j += 1;
         elif a[i] < b[j]:
-            ls[k] = (a[i]);
+            ls[k] = a[i];
             i += 1;
         k+=1
     
