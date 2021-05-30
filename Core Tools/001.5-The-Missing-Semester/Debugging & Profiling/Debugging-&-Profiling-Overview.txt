@@ -1,0 +1,127 @@
+Debugging 
+
+“The most effective debugging tool is still careful thought, 
+coupled with judiciously placed print statements” 
+— Brian Kernighan, Unix for Beginners.
+
+Ways to Debug:
+- Print statements 
+- Logs
+    - You can log to files, sockets or even remote servers instead of standard output.
+    - Logging supports severity levels (such as INFO, DEBUG, WARN, ERROR, &c), that allow you to filter the output accordingly.
+    - For new issues, there’s a fair chance that your logs will contain enough information to detect what is going wrong. 
+    - Color Code: you can use the more universally supported escape codes for 16 color choices, ie: echo -e "\e[31;1mThis is red\e[0m"
+
+Logs: 
+
+Show Log: Access system wide log messages created by os_log, os_trace and other logging systems.
+Logger: For logging under the system logs you can use the logger shell program.
+
+logger "Hello Logs"
+# On macOS
+log show --last 1m | grep Hello
+
+Logs can be quite verbose and they require some level of processing and filtering to get the information you want.
+
+Debuggers:
+
+When printf debugging is not enough you should use a debugger. 
+Debuggers are programs that let you interact with the execution of a program, 
+allowing the following:
+
+- Halt execution of the program when it reaches a certain line.
+- Step through the program one instruction at a time.
+- Inspect values of variables after the program crashed.
+- Conditionally halt the execution when a given condition is met.
+  And many more advanced features
+
+Tools:
+
+Most editors and IDEs support displaying the output of these tools within the editor itself, 
+highlighting the locations of warnings and errors. This is often called code linting and 
+it can also be used to display other types of issues such as stylistic violations or insecure 
+constructs.
+
+
+Profiling
+
+Even if your code functionally behaves as you would expect, 
+that might not be good enough if it takes all your CPU or memory in the process. 
+Algorithms classes often teach big O notation but not how to find hot spots in your programs.
+You should learn about profilers and monitoring tools. They will help you understand which parts 
+of your program are taking most of the time and/or resources so you can focus on optimizing those parts.
+
+Timing: 
+
+Similarly to the debugging case, in many scenarios it can be enough to just print the time it took your code between two points.
+
+However, wall clock time can be misleading since your computer might be running other processes at the same time or waiting for 
+events to happen. It is common for tools to make a distinction between Real, User and Sys time. In general, User + Sys tells you 
+how much time your process actually spent in the CPU.
+
+Real - Wall clock elapsed time from start to finish of the program, 
+       including the time taken by other processes and time taken while blocked 
+       (e.g. waiting for I/O or network)
+User - Amount of time spent in the CPU running user code
+Sys - Amount of time spent in the CPU running kernel code
+
+CPU:
+
+Most of the time when people refer to profilers they actually mean CPU profilers, 
+which are the most common. 
+There are two main types of CPU profilers: 
+- tracing profilers
+- sampling profilers
+
+Tracing profilers keep a record of every function call your program makes 
+whereas sampling profilers probe your program periodically (commonly every millisecond) 
+and record the program’s stack.
+
+They use these records to present aggregate statistics of what your program spent the most time doing
+
+In Python we can use the cProfile module to profile time per function call.
+
+If we used Python’s cProfile profiler we’d get over 2500 lines of output, and even with sorting it’d be hard 
+to understand where the time is being spent. A quick run with line_profiler shows the time taken per line:
+
+$ kernprof -l -v a.py
+Wrote profile results to urls.py.lprof
+Timer unit: 1e-06 s
+
+Total time: 0.636188 s
+File: a.py
+Function: get_urls at line 5
+
+Line #  Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+ 5                                           @profile
+ 6                                           def get_urls():
+ 7         1     613909.0 613909.0     96.5      response = requests.get('https://missing.csail.mit.edu')
+ 8         1      21559.0  21559.0      3.4      s = BeautifulSoup(response.content, 'lxml')
+ 9         1          2.0      2.0      0.0      urls = []
+10        25        685.0     27.4      0.1      for url in s.find_all('a'):
+11        24         33.0      1.4      0.0          urls.append(url['href'])
+
+Memory:
+
+In languages like C or C++ memory leaks can cause your program to never release memory that it doesn’t need anymore. 
+To help in the process of memory debugging you can use tools like Valgrind that will help you identify memory leaks.
+
+In garbage collected languages like Python it is still useful to use a memory profiler because as long as you have pointers 
+to objects in memory they won’t be garbage collected. 
+
+Visualization:
+
+Profiler output for real world programs will contain large amounts of information because of the inherent complexity of software projects. 
+Humans are visual creatures and are quite terrible at reading large amounts of numbers and making sense of them. Thus there are many tools 
+for displaying profiler’s output in an easier to parse way.
+
+One common way to display CPU profiling information for sampling profilers is to use a Flame Graph, which will display a hierarchy of function 
+calls across the Y axis and time taken proportional to the X axis. They are also interactive, letting you zoom into specific parts of the program 
+and get their stack traces
+
+Resource Monitoring:
+
+Many tools at: https://missing.csail.mit.edu/2020/debugging-profiling/
+
+

@@ -1,0 +1,86 @@
+Entropy: is a measure of randomness. 
+
+Entropy is measured in bits, and when selecting uniformly at random from a set of possible outcomes, 
+the entropy is equal to log_2(# of possibilities). A fair coin flip gives 1 bit of entropy. A dice roll 
+(of a 6-sided die) has ~2.58 bits of entropy.
+
+You should consider that the attacker knows the model of the password, but not the randomness (e.g. from dice rolls) 
+used to select a particular password
+
+How many bits of entropy is enough? It depends on your threat model. For online guessing, as the XKCD comic points out, 
+~40 bits of entropy is pretty good. To be resistant to offline guessing, a stronger password would be necessary (e.g. 80 bits, or more).
+
+
+Hash Functions:
+
+A cryptographic hash function maps data of arbitrary size to a fixed size, and has some special properties. 
+A rough specification of a hash function is as follows:
+
+hash(value: array<byte>) -> vector<byte, N>  (for some fixed N)
+
+An example of a hash function is SHA1, which is used in Git. 
+It maps arbitrary-sized inputs to 160-bit outputs (which can be represented as 40 hexadecimal characters). 
+We can try out the SHA1 hash on an input using the sha1sum command:
+
+$ printf 'hello' | sha1sum
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+$ printf 'hello' | sha1sum
+aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d
+$ printf 'Hello' | sha1sum 
+f7ff9e8b7bb2e09b70935a5d785e0cc5d9d0abf0
+
+At a high level, a hash function can be thought of as a hard-to-invert random-looking (but deterministic) function.
+A hash function has the following properties:
+
+- Deterministic: the same input always generates the same output.
+- Non-invertible: it is hard to find an input m such that hash(m) = h for some desired output h.
+- Target collision resistant: given an input m_1, it’s hard to find a different input m_2 such that hash(m_1) = hash(m_2).
+- Collision resistant: it’s hard to find two inputs m_1 and m_2 such that hash(m_1) = hash(m_2) (note that this is a strictly stronger property than target collision resistance).
+
+Note: while it may work for certain purposes, SHA-1 is no longer considered a strong cryptographic hash function.
+https://shattered.io/
+
+Key Derivation Functions:
+
+A related concept to cryptographic hashes, key derivation functions (KDFs) are used for a number of applications, 
+including producing fixed-length output for use as keys in other cryptographic algorithms. Usually, KDFs are deliberately slow, 
+in order to slow down offline brute-force attacks.
+
+Applications
+- Producing keys from passphrases for use in other cryptographic algorithms (e.g. symmetric cryptography, see below).
+- Storing login credentials. Storing plaintext passwords is bad; the right approach is to generate and store a random salt salt = random() 
+  for each user, store KDF(password + salt), and verify login attempts by re-computing the KDF given the entered password and the stored salt.
+
+Symmetric Cryptography:
+
+Hiding message contents is probably the first concept you think about when you think about cryptography. 
+Symmetric cryptography accomplishes this with the following set of functionality:
+
+keygen() -> key  (this function is randomized)
+
+encrypt(plaintext: array<byte>, key) -> array<byte>  (the ciphertext)
+decrypt(ciphertext: array<byte>, key) -> array<byte>  (the plaintext)
+
+The encrypt function has the property that given the output (ciphertext), it’s hard to determine the input (plaintext) without the key. 
+The decrypt function has the obvious correctness property, that decrypt(encrypt(m, k), k) = m.
+
+Applications
+
+Encrypting files for storage in an untrusted cloud service. 
+This can be combined with KDFs, so you can encrypt a file with a passphrase. 
+Generate key = KDF(passphrase), and then store encrypt(file, key).
+
+Asymmetric Cryptography
+
+The term “asymmetric” refers to there being two keys, with two different roles. 
+A private key, as its name implies, is meant to be kept private, while the public key can be publicly shared and 
+it won’t affect security (unlike sharing the key in a symmetric cryptosystem). 
+
+
+
+
+
+
+
+
+
