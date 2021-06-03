@@ -14,6 +14,7 @@ const App = () => {
   const ancedoteVotes = Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0)
    
   const [selected, setSelected] = useState(0)
+  const [highest, sethighestVote] = useState(0)
   const [votes, setVotes] = useState(ancedoteVotes)
 
   const rotateAnecdotes = () => () => {
@@ -23,16 +24,26 @@ const App = () => {
   const incrementVotes = () => () => {
     let copyVotes = [...votes]
     copyVotes[selected] += 1;
+    setHighestVoted(copyVotes);
+    return setVotes(copyVotes);
+  }
 
-    return setVotes(copyVotes) 
+  const setHighestVoted = (array) => {
+    let highestVote = Math.max(...array);
+    let indexOfHighestVote = array.indexOf(highestVote)
+    return sethighestVote(indexOfHighestVote)
   }
 
   return (
     <div>
+      <h1>Anecdote of The Day</h1> <br />
       {anecdotes[selected]} <br/>
+      <p>has {votes[selected]} votes</p>
       <button onClick={incrementVotes()}>vote</button>
-      <p>{votes[selected]}</p>
       <button onClick={rotateAnecdotes()}>next anecdote</button>
+      
+      <h1>Ancedote with Most Votes</h1> <br />
+      {anecdotes[highest]}
     </div>
   )
 }
