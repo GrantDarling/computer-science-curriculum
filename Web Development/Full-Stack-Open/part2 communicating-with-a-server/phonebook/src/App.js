@@ -8,10 +8,13 @@ const App = () => {
 
   const addContact = (e) => {
     e.preventDefault();
-
     const newContact = { name: newName }
-    setPersons(persons.concat(newContact));
-    setNewName("");
+
+    persons.some( person => person.name === newContact.name ) 
+    ? alert(`${newContact.name} has already been added.`)
+    : setPersons(persons.concat(newContact))
+    
+    setNewName('');
   }
 
   const handleNameChange = (e) => {
