@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
+import personService from './services/persons'
 
 const Filter = (props) => {
   const handleFilterChange = (e) => {
@@ -22,11 +22,10 @@ const PersonForm = (props) => {
     ? alert(`${newContact.name} has already been added.`)
     : props.setPersons(props.persons.concat(newContact))
 
-    axios
-      .post('http://localhost:3000/persons', newContact)
-      .then(response => {
-        props.setPersons(props.persons.concat(response.data))
-        console.log(response.data)
+    personService
+      .create(newContact)
+      .then(returnedContacts => {
+        props.setPersons(props.persons.concat(returnedContacts))
     })
     
     setNewName('');
@@ -79,11 +78,9 @@ const App = () => {
   const [ filter, setFilter ] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    personService
+      .getAll()
+      .then(initialPersons => setPersons(initialPersons))
   }, [])
 
   return (
