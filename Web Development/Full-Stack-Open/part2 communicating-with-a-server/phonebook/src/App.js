@@ -60,10 +60,16 @@ const Persons = (props) => {
     }) 
   }
 
+  const deletePerson = (id) => {
+    if (window.confirm("Delete contact?")) {
+      personService.deletePerson(id);
+    }
+  }
+
   return (
   <>
     {filteredPeople().map(person => {
-      return <p key={person.id}>{person.name} {person.number}</p> 
+      return <p key={person.id}>{person.name} {person.number} <button onClick={() => deletePerson(person.id)}>delete</button></p> 
     })}
   </>
   )
