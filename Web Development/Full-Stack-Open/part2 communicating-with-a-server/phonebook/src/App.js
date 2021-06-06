@@ -13,14 +13,21 @@ const Filter = (props) => {
 const PersonForm = (props) => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
+  const newContact = { name: newName, number: newNumber, id:'' }
 
   const addContact = (e) => {
     e.preventDefault();
-    const newContact = { name: newName, number: newNumber }
 
     props.persons.some( person => person.name === newContact.name ) 
     ? alert(`${newContact.name} has already been added.`)
     : props.setPersons(props.persons.concat(newContact))
+
+    axios
+      .post('http://localhost:3000/persons', newContact)
+      .then(response => {
+        props.setPersons(props.persons.concat(response.data))
+        console.log(response.data)
+    })
     
     setNewName('');
     setNewNumber('');
@@ -57,7 +64,7 @@ const Persons = (props) => {
   return (
   <>
     {filteredPeople().map(person => {
-      return <p key={person.name}>{person.name} {person.number}</p> 
+      return <p key={person.id}>{person.name} {person.number}</p> 
     })}
   </>
   )
@@ -66,14 +73,14 @@ const Persons = (props) => {
 const App = () => {
 
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
+    { id:'1', name: 'Arto Hellas', number: '040-123456' },
   ])
   
   const [ filter, setFilter ] = useState('')
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get('http://localhost:3000/persons')
       .then(response => {
         setPersons(response.data)
       })
