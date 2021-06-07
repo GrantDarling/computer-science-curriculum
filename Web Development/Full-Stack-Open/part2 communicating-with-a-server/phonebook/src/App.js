@@ -10,6 +10,25 @@ const Filter = (props) => {
   )
 }
 
+const Notification = ({ message }) => {
+  const success = {
+    color: 'green',
+    fontStyle: 'italic',
+    fontSize: 16,
+    background: 'grey'
+  }
+
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div style={success}>
+      {message}
+    </div>
+  )
+}
+
 const PersonForm = (props) => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
@@ -19,6 +38,12 @@ const PersonForm = (props) => {
     if (window.confirm("Contact already exists, replace the contacts number?")) {
       personService
         .updatePerson(id, { name: existingContact.name, number: newContact.number, id: existingContact.id})
+        .then(() => {
+          personService
+          .getAll()
+          .then(initialPersons => props.setPersons(initialPersons)) 
+        })
+
     } else {
       personService
         .updatePerson(id, { name: existingContact.name, number: existingContact.number, id: existingContact.id})
@@ -35,6 +60,10 @@ const PersonForm = (props) => {
         .create(newContact)
         .then(returnedContacts => {
           props.setPersons(props.persons.concat(returnedContacts))
+
+          props.setAlertMessage(`New contact ${returnedContacts.name} added!`);
+
+          setTimeout(function(){ props.setAlertMessage('') }, 3000);
       })
     
     setNewName('');
@@ -69,16 +98,10 @@ const Persons = (props) => {
     }) 
   }
 
-  const deletePerson = (id) => {
-    if (window.confirm("Delete contact?")) {
-      personService.deletePerson(id);
-    }
-  }
-
   return (
   <>
     {filteredPeople().map(person => {
-      return <p key={person.id}>{person.name} {person.number} <button onClick={() => deletePerson(person.id)}>delete</button></p> 
+      return <p key={person.id}>{person.name} {person.number} <button onClick={() => props.deletePerson(person.id)}>delete</button></p> 
     })}
   </>
   )
@@ -91,6 +114,24 @@ const App = () => {
   ])
   
   const [ filter, setFilter ] = useState('')
+  const [ alertMessage, setAlertMessage ] = useState('')
+
+  const deletePerson = (id) => {
+    if (window.confirm("Delete contact?")) {
+      personService
+      .deletePerson(id)
+      .then(() => {
+          personService
+          .getAll()
+          .then(initialPersons => setPersons(initialPersons)) 
+      })
+
+    // personService
+    //   .getAll()
+    //   .then(initialPersons => setPersons(initialPersons))
+    }
+  }
+
 
   useEffect(() => {
     personService
@@ -100,11 +141,12 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={alertMessage} />
       <h2>Phonebook</h2>
       <Filter persons={persons} setFilter={setFilter} />
-      <PersonForm persons={persons} setPersons={setPersons} />
+      <PersonForm persons={persons} setPersons={setPersons} setAlertMessage={setAlertMessage} />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
+      <Persons persons={persons} filter={filter} deletePerson={(id) => deletePerson(id)} />
     </div>
   )
 }
