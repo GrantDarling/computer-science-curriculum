@@ -10,7 +10,7 @@ const Filter = (props) => {
   )
 }
 
-const Notification = ({ message }) => {
+const Notification = ({ message, alertType }) => {
   const success = {
     color: 'green',
     fontStyle: 'italic',
@@ -18,15 +18,34 @@ const Notification = ({ message }) => {
     background: 'grey'
   }
 
-  if (message === null) {
-    return null
+  const error = {
+    color: 'red',
+    fontStyle: 'italic',
+    fontSize: 16,
+    background: ''
   }
 
-  return (
-    <div style={success}>
-      {message}
-    </div>
-  )
+  if (alertType === '') {
+    return null
+  } else if (alertType === "success") {
+    return (
+      <div style={success}>
+       {message}
+      </div>
+    )
+  } else if (alertType === "error") {
+    return (
+      <div style={error}>
+       {message}
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        {message}
+      </div>
+    )
+  }
 }
 
 const PersonForm = (props) => {
@@ -43,10 +62,19 @@ const PersonForm = (props) => {
           .getAll()
           .then(initialPersons => props.setPersons(initialPersons)) 
         })
+        .catch((error) => {
+          props.setAlertMessage(error);
+          props.setAlertType("error");
+
+          setTimeout(function(){ props.setAlertType('') }, 3000);
+        })
 
     } else {
       personService
         .updatePerson(id, { name: existingContact.name, number: existingContact.number, id: existingContact.id})
+        .catch((error) => {
+          console.log(`this: ${error}`)
+        })
     }
   }
 
@@ -62,8 +90,9 @@ const PersonForm = (props) => {
           props.setPersons(props.persons.concat(returnedContacts))
 
           props.setAlertMessage(`New contact ${returnedContacts.name} added!`);
+          props.setAlertType('success')
 
-          setTimeout(function(){ props.setAlertMessage('') }, 3000);
+          setTimeout(function(){ props.setAlertType('') }, 3000);
       })
     
     setNewName('');
@@ -109,12 +138,11 @@ const Persons = (props) => {
 
 const App = () => {
 
-  const [persons, setPersons] = useState([
-    { id:'1', name: 'Arto Hellas', number: '040-123456' },
-  ])
+  const [persons, setPersons] = useState([])
   
   const [ filter, setFilter ] = useState('')
   const [ alertMessage, setAlertMessage ] = useState('')
+  const [ alertType, setAlertType ] = useState('')
 
   const deletePerson = (id) => {
     if (window.confirm("Delete contact?")) {
@@ -125,13 +153,8 @@ const App = () => {
           .getAll()
           .then(initialPersons => setPersons(initialPersons)) 
       })
-
-    // personService
-    //   .getAll()
-    //   .then(initialPersons => setPersons(initialPersons))
     }
   }
-
 
   useEffect(() => {
     personService
@@ -141,10 +164,10 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={alertMessage} />
+      <Notification message={alertMessage} alertType={alertType} />
       <h2>Phonebook</h2>
       <Filter persons={persons} setFilter={setFilter} />
-      <PersonForm persons={persons} setPersons={setPersons} setAlertMessage={setAlertMessage} />
+      <PersonForm persons={persons} setPersons={setPersons} setAlertMessage={setAlertMessage} setAlertType={setAlertType} />
       <h2>Numbers</h2>
       <Persons persons={persons} filter={filter} deletePerson={(id) => deletePerson(id)} />
     </div>
