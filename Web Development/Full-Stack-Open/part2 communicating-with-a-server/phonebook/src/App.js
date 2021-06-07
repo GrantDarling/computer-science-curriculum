@@ -27,22 +27,20 @@ const Notification = ({ message, alertType }) => {
 
   if (alertType === '') {
     return null
-  } else if (alertType === "success") {
+  } 
+  
+  if (alertType === "success") {
     return (
       <div style={success}>
        {message}
       </div>
     )
-  } else if (alertType === "error") {
+  } 
+  
+  if (alertType === "error") {
     return (
       <div style={error}>
        {message}
-      </div>
-    )
-  } else {
-    return (
-      <div>
-        {message}
       </div>
     )
   }
@@ -93,10 +91,10 @@ const PersonForm = (props) => {
           props.setAlertType('success')
 
           setTimeout(function(){ props.setAlertType('') }, 3000);
-      })
+        })
     
-    setNewName('');
-    setNewNumber('');
+      setNewName('');
+      setNewNumber('');
   }
 
   const handleNameChange = (e) => {
@@ -139,7 +137,6 @@ const Persons = (props) => {
 const App = () => {
 
   const [persons, setPersons] = useState([])
-  
   const [ filter, setFilter ] = useState('')
   const [ alertMessage, setAlertMessage ] = useState('')
   const [ alertType, setAlertType ] = useState('')
@@ -165,6 +162,7 @@ const App = () => {
   return (
     <div>
       <Notification message={alertMessage} alertType={alertType} />
+      
       <h2>Phonebook</h2>
       <Filter persons={persons} setFilter={setFilter} />
       <PersonForm persons={persons} setPersons={setPersons} setAlertMessage={setAlertMessage} setAlertType={setAlertType} />
