@@ -15,18 +15,27 @@ const PersonForm = (props) => {
   const [ newNumber, setNewNumber ] = useState('')
   const newContact = { name: newName, number: newNumber, id:'' }
 
+  const updateContact = (id, existingContact) => {
+    if (window.confirm("Contact already exists, replace the contacts number?")) {
+      personService
+        .updatePerson(id, { name: existingContact.name, number: newContact.number, id: existingContact.id})
+    } else {
+      personService
+        .updatePerson(id, { name: existingContact.name, number: existingContact.number, id: existingContact.id})
+    }
+  }
+
   const addContact = (e) => {
     e.preventDefault();
+    const existingContact = props.persons.find( person => person.name === newContact.name ); 
 
     props.persons.some( person => person.name === newContact.name ) 
-    ? alert(`${newContact.name} has already been added.`)
-    : props.setPersons(props.persons.concat(newContact))
-
-    personService
-      .create(newContact)
-      .then(returnedContacts => {
-        props.setPersons(props.persons.concat(returnedContacts))
-    })
+    ? updateContact(existingContact.id, existingContact)
+    : personService
+        .create(newContact)
+        .then(returnedContacts => {
+          props.setPersons(props.persons.concat(returnedContacts))
+      })
     
     setNewName('');
     setNewNumber('');
