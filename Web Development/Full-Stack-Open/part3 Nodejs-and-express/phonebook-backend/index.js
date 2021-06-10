@@ -1,6 +1,13 @@
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
+const cors = require('cors')
+
+// frontend build
+app.use(express.static('build'))
+
+// cross origin 
+app.use(cors());
 
 // body parser
 app.use(express.json());
@@ -36,10 +43,6 @@ let persons = [
 ]
 
 // routes 
-app.get('/', (req, res) => {
-    res.send(`phonebook backend index`);
-});
-
 app.get('/persons', (req, res) => {
     res.json(persons)
 })
@@ -82,7 +85,8 @@ app.post('/persons/', (req, res, next) => {
       persons = persons.concat(person)
       res.sendStatus(200);
     }
+    
 })
 
-const PORT = 3001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => { console.log(`Server running on port ${PORT}`) })
