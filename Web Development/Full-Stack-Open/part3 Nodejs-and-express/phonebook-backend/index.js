@@ -2,9 +2,10 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const cors = require('cors')
+const Person = require('./models/persons')
 
 // frontend build
-app.use(express.static('build'))
+//app.use(express.static('build'))
 
 // cross origin 
 app.use(cors());
@@ -42,9 +43,13 @@ let persons = [
   }  
 ]
 
+// Connect DB
+
 // routes 
 app.get('/persons', (req, res) => {
-    res.json(persons)
+    Person.find({}).then(persons => {
+      res.json(persons)
+    })
 })
 
 app.get('/persons/:id', (req, res) => {
