@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
@@ -5,7 +6,7 @@ const cors = require('cors')
 const Person = require('./models/persons')
 
 // frontend build
-//app.use(express.static('build'))
+app.use(express.static('build'))
 
 // cross origin 
 app.use(cors());
@@ -53,14 +54,11 @@ app.get('/persons', (req, res) => {
 })
 
 app.get('/persons/:id', (req, res) => {
-  const id = Number(req.params.id)
-  const person = persons.find(person => person.id === id)
-
-  if (person) {
+  Person.findById(req.params.id).then(person => {
     res.json(person)
-  } else {
+  }).catch(error => {
     res.status(404).end()
-  }
+  })
 })
 
 app.get('/info', (req, res) => {
@@ -70,28 +68,43 @@ app.get('/info', (req, res) => {
 })
 
 app.delete('/persons/:id', (req, res) => {
-    const id = Number(req.params.id);
-    persons = persons.filter(person => person.id !== id)
-
-    res.status(204).end();
+  Person.findByIdAndRemove(req.params.id).then(person => {
+    res.send("Contact removed");
+  }).catch(error => {
+    res.status(404).end()
+  })
 })
 
 app.post('/persons/', (req, res, next) => {
     req.posted = JSON.stringify(req.body)
     next()
   }, (req, res) => {
-    const person = req.body
-    person["id"] = Math.floor(Math.random() * 10000)
-    const nameExists = persons.find(person => person.name === req.body.name)
+  const body = req.body
+  if (body === undefined) {
+    return res.status(400).json({ error: 'content missing' })
+  }
 
-    if(person.name === undefined || person.number === undefined || nameExists) {
-      res.status(400).send({ error: 'name must be unique' });
-    } else {
-      persons = persons.concat(person)
-      res.sendStatus(200);
-    }
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+    date: Date.now(),
+  })
+
+  console.log(person)
+
+  person.save().then(savedPerson => {
+    res.json(savedPerson)
+  })
+    //const nameExists = persons.find(person => person.name === req.body.name)
+
+    // if(person.name === undefined || person.number === undefined || nameExists) {
+    //   res.status(400).send({ error: 'name must be unique' });
+    // } else {
+    //   persons = persons.concat(person)
+    //   res.sendStatus(200);
+    // }
     
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => { console.log(`Server running on port ${PORT}`) })
