@@ -8,7 +8,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "build": "npm run build --prefix client && cp -r client/build ./",
-    "deploy": "sh ./deploy.sh"
+    "deploy": "sh ./deploy.sh",
+    "lint": "node_modules/.bin/eslint index.js"
   },
   "author": "Grant Darling",
   "license": "ISC",
@@ -22,5 +23,10 @@
     "mongoose-validator": "^2.1.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.24.0"
   }
 }
