@@ -92,8 +92,12 @@ const PersonForm = (props) => {
 
           props.setAlertMessage(`New contact ${newContact.name} added!`);
           props.setAlertType('success')
-
           setTimeout(function(){ props.setAlertType('') }, 3000);
+        }).catch(error => {
+          console.log(error.response.data)
+          props.setAlertMessage(error.response.data.error);
+          props.setAlertType("error");
+          setTimeout(function(){ props.setAlertType('') }, 3000); 
         })
     
       setNewName('');

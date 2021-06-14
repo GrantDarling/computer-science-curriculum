@@ -94,6 +94,16 @@ app.post('/persons/', (req, res, next) => {
 
   person.save().then(savedPerson => {
     res.json(savedPerson)
+  }).catch(error => {
+      console.error(error.message)
+
+       if (error.name === 'CastError') {
+         return res.status(400).send({ error: 'malformatted id' })
+       } else if (error.name === 'ValidationError') {
+         return res.status(400).json({ error: error.message })
+       }
+
+      // next(error)
   })
     //const nameExists = persons.find(person => person.name === req.body.name)
 
@@ -103,7 +113,6 @@ app.post('/persons/', (req, res, next) => {
     //   persons = persons.concat(person)
     //   res.sendStatus(200);
     // }
-    
 })
 
 const PORT = process.env.PORT
