@@ -50,14 +50,14 @@ const listWithManyBlogs = [
 ];
 
 const validBlog = {
-id: '134567867543',
+    id: '134567867543',
     title: 'My Valid Blog',
     author: 'Danny Brown',
     url:
       'www.myURL.com',
     likes: 59,
     __v: 0
-  };
+};
  
 const blogWithoutLikes = {
     id: '134567867543',
@@ -75,59 +75,94 @@ const blogWithoutUrlAndTitle = {
     __v: 0
 };
 
+const deletedBlog = {
+    id: '134567867543',
+    title: 'to be deleted',
+    author: 'Danny Brown',
+    url:
+      'www.myURL.com',
+    likes: 59,
+    __v: 0
+};
+
 beforeEach(async () => {
   await Blog.deleteMany({});
   const blogs = listWithManyBlogs.map((blog) => new Blog(blog));
   const promiseArray = blogs.map((blog) => blog.save());
   await Promise.all(promiseArray);
 });
+describe('blog api tests', () => {
+  test('blogs are returned as json', async () => {
+    await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
 
-test('blogs are returned as json', async () => {
-  await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-})
+  test('blogs contain the transformed id', async () => {
+      const response = await api.get('/api/blogs')
+      
+      expect(response.body[0].id).toBeDefined()
+  })
 
-test('blogs contain the transformed id', async () => {
+  test('blogs can be added', async () => {
+    await api
+      .post('/api/blogs')
+      .send(validBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
     const response = await api.get('/api/blogs')
-    
-    expect(response.body[0].id).toBeDefined()
-})
 
-test('blogs can be added', async () => {
-  await api
+    const titles = response.body.map(r => r.title)
+
+    expect(response.body).toHaveLength(listWithManyBlogs.length + 1)
+    expect(titles).toContain(
+      'My Valid Blog'
+    )
+  })
+
+  test('blog without likes defaults to 0', async () => {
+    await api
     .post('/api/blogs')
-    .send(validBlog)
-    .expect(201)
-    .expect('Content-Type', /application\/json/)
+    .send(blogWithoutLikes)
+    
+    const response = await api.get('/api/blogs')
 
-  const response = await api.get('/api/blogs')
+    const invalidBlog = response.body.find(r => r.likes === 0)
+    expect(invalidBlog.likes).toEqual(0)
+  })
 
-  const titles = response.body.map(r => r.title)
+  test('blog without url and title return 404', async () => {
+    await api
+    .post('/api/blogs')
+    .send(blogWithoutUrlAndTitle)
+    .expect(400)
+  })
 
-  expect(response.body).toHaveLength(listWithManyBlogs.length + 1)
-  expect(titles).toContain(
-    'My Valid Blog'
-  )
-})
+  test('deletes blog', async () => {
+    await api
+      .post('/api/blogs')
+      .send(deletedBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
 
-test('blog without likes defaults to 0', async () => {
-  await api
-  .post('/api/blogs')
-  .send(blogWithoutLikes)
-  
-  const response = await api.get('/api/blogs')
+    const response = await api.get('/api/blogs')
 
-  const invalidBlog = response.body.find(r => r.likes === 0)
-  expect(invalidBlog.likes).toEqual(0)
-})
+    let thisBlog = response.body.find(r => r.title === "to be deleted")
+    
+    console.log(thisBlog.title)
+    expect(thisBlog.title).toContain(
+      "to be deleted"
+    )
 
-test('blog without url and title return 404', async () => {
-  await api
-  .post('/api/blogs')
-  .send(blogWithoutUrlAndTitle)
-  .expect(400)
+    await api
+    .delete('/api/blogs/134567867543')
+
+    thisBlog = response.body.filter(r => r.title === "to be deleted")
+    expect(thisBlog.title).toEqual(undefined)
+
+  })
 })
 
 afterAll(() => {

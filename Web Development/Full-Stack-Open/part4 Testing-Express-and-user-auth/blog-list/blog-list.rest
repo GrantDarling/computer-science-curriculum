@@ -29,3 +29,6 @@ content-type: application/json
     "author": "Grant Darling",
     "likes": 300
 }
+
+###
+DELETE http://localhost:3003/api/blogs/60c7e2ce450c0d8d58efd0f2 HTTP/1.1
