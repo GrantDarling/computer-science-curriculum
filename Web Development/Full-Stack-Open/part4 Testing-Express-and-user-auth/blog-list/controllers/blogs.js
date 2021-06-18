@@ -12,14 +12,21 @@ blogRouter.get('/', (request, response) => {
     })
 })
 
-blogRouter.post('/', (request, response) => {
-  const blog = new Blog(request.body)
+blogRouter.post('/', async (request, response) => {
+  let blog = new Blog(request.body)
+  if (blog.likes === undefined) 
+    blog.likes = 0;
 
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
+  try {
+    if(blog.url === undefined && blog.title === undefined) 
+      throw error
+    
+    const result = await blog.save()
+    response.status(201).json(result) 
+
+  } catch (error) {
+    response.status(400).json(error)
+  }
 })
 
 module.exports = blogRouter
