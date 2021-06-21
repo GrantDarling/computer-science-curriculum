@@ -53,3 +53,21 @@ content-type: application/json
     "name": "Grant Darling",
     "password": "change me"
 }
+
+###
+POST http://localhost:3003/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "grantdarling",
+    "password": "Gawwwy"
+}
+
+###
+POST http://localhost:3003/api/login HTTP/1.1
+content-type: application/json
+
+{
+    "username": "My username",
+    "password": "change me"
+}
