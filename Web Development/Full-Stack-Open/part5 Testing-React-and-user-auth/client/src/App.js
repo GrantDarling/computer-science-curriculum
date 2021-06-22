@@ -12,6 +12,7 @@ const LoginForm = (props) => {
         <div>
           username
           <input
+            id='username'
             value={props.username}
             onChange={props.onChangeUsername}
             name="username"
@@ -19,11 +20,12 @@ const LoginForm = (props) => {
         </div>
          password
           <input
+            id='password'
             value={props.password}
             onChange={props.onChangePassword}
             name="password"
           />
-        <button type="submit">login</button>
+        <button id="login-button" type="submit">login</button>
       </form>
     </div>
   )
@@ -33,21 +35,24 @@ const CreateBlogForm = (props) => {
   return (
       <form onSubmit={props.addBlog}>
           <input 
+            id='title'
             type="text"
             placeholder="title"
             value={props.title}
             onChange={props.onChangeTitle} />
             <input 
+            id='author'
             type="text"
             placeholder="author"
             value={props.uthor}
             onChange={props.onChangeAuthor} />
             <input 
+            id='url'
             type="text"
             placeholder="url"
             value={props.url}
             onChange={props.onChangeUrl} />
-        <button type="submit">save</button>
+        <button id='save' type="submit">save</button>
       </form>  
   )
 }
