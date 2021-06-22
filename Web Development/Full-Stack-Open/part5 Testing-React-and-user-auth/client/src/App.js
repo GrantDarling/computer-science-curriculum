@@ -9,6 +9,9 @@ const App = () => {
   const [password, setPassword] = useState('') 
   const [errorMessage, setErrorMessage] = useState(null)
   const [user, setUser] = useState(null) 
+  const [title, setTitle] = useState('') 
+  const [author, setAuthor] = useState('') 
+  const [url, setUrl] = useState('') 
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -31,6 +34,18 @@ const App = () => {
 
   const onChangePassword = (e) => {
     setPassword(e.target.value)
+  }
+
+  const onChangeTitle = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const onChangeAuthor = (e) => {
+    setAuthor(e.target.value)
+  }
+
+  const onChangeUrl = (e) => {
+    setUrl(e.target.value)
   }
 
   const onSubmit = async (e) => {
@@ -84,6 +99,27 @@ const App = () => {
     )
   }
 
+  const addBlog = async (e) => {
+    e.preventDefault();
+    console.log(`${title}, ${author}, ${url}`)
+
+    try {
+      await blogService.create({title, author, url})
+
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+      const blogs = await blogService.getAll()
+      setBlogs( blogs )
+    } catch (exception) {
+      setErrorMessage('Wrong credentials')
+      console.log(errorMessage)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }   
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -91,6 +127,24 @@ const App = () => {
         <Blog key={blog.id} blog={blog} />
       )}
       <button onClick={() => logOut()}>log out</button>
+      <form onSubmit={addBlog}>
+          <input 
+            type="text"
+            placeholder="title"
+            value={title}
+            onChange={onChangeTitle} />
+            <input 
+            type="text"
+            placeholder="author"
+            value={author}
+            onChange={onChangeAuthor} />
+            <input 
+            type="text"
+            placeholder="url"
+            value={url}
+            onChange={onChangeUrl} />
+        <button type="submit">save</button>
+      </form>  
     </div>
   )
 }
