@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
+import PropTypes from 'prop-types'
 
 const LoginForm = (props) => {
   return (
@@ -25,6 +26,29 @@ const LoginForm = (props) => {
         <button type="submit">login</button>
       </form>
     </div>
+  )
+}
+
+const CreateBlogForm = (props) => {
+  return (
+      <form onSubmit={props.addBlog}>
+          <input 
+            type="text"
+            placeholder="title"
+            value={props.title}
+            onChange={props.onChangeTitle} />
+            <input 
+            type="text"
+            placeholder="author"
+            value={props.uthor}
+            onChange={props.onChangeAuthor} />
+            <input 
+            type="text"
+            placeholder="url"
+            value={props.url}
+            onChange={props.onChangeUrl} />
+        <button type="submit">save</button>
+      </form>  
   )
 }
 
@@ -53,7 +77,9 @@ const App = () => {
         setUser(user)
         blogService.setToken(user.token)
       }
+
   }, [])
+  
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value)
@@ -149,10 +175,6 @@ const App = () => {
     }   
   }
 
-    const loginForm = () => {
-
-  }
-
   return (
     <div>
       <h2>blogs</h2>
@@ -161,26 +183,19 @@ const App = () => {
       )}
       {/* <h7>{user.name} logged in</h7> */}
       <button onClick={() => logOut()}>log out</button>
-      <form onSubmit={addBlog}>
-          <input 
-            type="text"
-            placeholder="title"
-            value={title}
-            onChange={onChangeTitle} />
-            <input 
-            type="text"
-            placeholder="author"
-            value={author}
-            onChange={onChangeAuthor} />
-            <input 
-            type="text"
-            placeholder="url"
-            value={url}
-            onChange={onChangeUrl} />
-        <button type="submit">save</button>
-      </form>  
+      <CreateBlogForm
+        onChangeTitle={onChangeTitle}
+        onChangeAuthor={onChangeAuthor}
+        onChangePassword={onChangePassword}
+        onChangeUrl={onChangeUrl}
+        addBlog={addBlog} />
     </div>
   )
 }
+
+  LoginForm.propTypes = {
+    password: PropTypes.string.isRequired
+  } 
+
 
 export default App
