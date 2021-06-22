@@ -126,6 +126,7 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
+      <h7>{user.name} logged in</h7>
       <button onClick={() => logOut()}>log out</button>
       <form onSubmit={addBlog}>
           <input 
