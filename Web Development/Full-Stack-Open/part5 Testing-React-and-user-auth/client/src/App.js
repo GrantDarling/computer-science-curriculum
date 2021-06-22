@@ -3,6 +3,32 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login' 
 
+const LoginForm = (props) => {
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={props.handleSubmit}>
+        <div>
+          username
+          <input
+            value={props.username}
+            onChange={props.onChangeUsername}
+            name="username"
+          />
+        </div>
+         password
+          <input
+            value={props.password}
+            onChange={props.onChangePassword}
+            name="password"
+          />
+        <button type="submit">login</button>
+      </form>
+    </div>
+  )
+}
+
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('') 
@@ -12,6 +38,7 @@ const App = () => {
   const [title, setTitle] = useState('') 
   const [author, setAuthor] = useState('') 
   const [url, setUrl] = useState('') 
+  const [loginVisible, setLoginVisible] = useState(false)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -77,24 +104,26 @@ const App = () => {
   }
 
   if (user === null) {
+    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+    const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
     return (
       <div>
-        <h2>Log in to application</h2>
-        <form onSubmit={onSubmit}>
-          <p>Name:</p>
-          <input 
-            type="text"
-            placeholder="name"
-            value={username}
-            onChange={onChangeUsername} />
-          <p>Password:</p>
-          <input 
-            type="text"
-            placeholder="password"
-            value={password}
-            onChange={onChangePassword} /> <br /><br />
-          <button>login</button>
-        </form>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>log in</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={onSubmit}
+            onChangeUsername={onChangeUsername}
+            onChangePassword={onChangePassword}
+          />
+          <button onClick={() => setLoginVisible(false)}>cancel</button>
+        </div>
       </div>
     )
   }
@@ -120,13 +149,17 @@ const App = () => {
     }   
   }
 
+    const loginForm = () => {
+
+  }
+
   return (
     <div>
       <h2>blogs</h2>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
-      <h7>{user.name} logged in</h7>
+      {/* <h7>{user.name} logged in</h7> */}
       <button onClick={() => logOut()}>log out</button>
       <form onSubmit={addBlog}>
           <input 
