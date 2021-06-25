@@ -1,9 +1,12 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { castVote, addAncedote } from './reducers/anecdoteReducer'
+import { addNotification } from './reducers/notificationReducer'
+
+import Notification from './components/Notification'
 
 const AnecdoteList = () => {
-  const anecdotes = useSelector(state => state)
+  const anecdotes = useSelector(state => state.anecdotes)
   const dispatch = useDispatch()
 
   const vote = (content) => {
@@ -36,6 +39,7 @@ const AnecdoteForm = () => {
     const content = event.target.ancedote.value
     event.target.ancedote.value = ''
     dispatch(addAncedote(content))
+    dispatch(addNotification(content))
   }
 
   return (
@@ -52,6 +56,7 @@ const AnecdoteForm = () => {
 const App = () => {
   return (
     <div>
+      <Notification />
       <h2>Anecdotes</h2>
       <AnecdoteList />
       <AnecdoteForm />
