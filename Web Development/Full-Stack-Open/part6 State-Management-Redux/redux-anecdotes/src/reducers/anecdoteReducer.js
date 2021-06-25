@@ -22,8 +22,23 @@ const initialState = anecdotesAtStart.map(asObject)
 const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
+  switch(action.type) {
+      case 'CAST_VOTE':
+        const filteredAnecdote = state.filter(anecdote => anecdote.id !== action.data.content.id);
+        console.log(action.data);
+        return [ ...filteredAnecdote, action.data.content].sort((a, b) => b.votes - a.votes)
+      default:
+        return state
+    }
+}
 
-  return state
+export const castVote = (content) => {
+  return {
+    type: 'CAST_VOTE',
+    data: {
+      content
+    }
+  }
 }
 
 export default reducer
