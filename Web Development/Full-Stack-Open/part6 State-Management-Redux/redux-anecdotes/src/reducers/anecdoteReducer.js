@@ -25,8 +25,10 @@ const reducer = (state = initialState, action) => {
   switch(action.type) {
       case 'CAST_VOTE':
         const filteredAnecdote = state.filter(anecdote => anecdote.id !== action.data.content.id);
-        console.log(action.data);
         return [ ...filteredAnecdote, action.data.content].sort((a, b) => b.votes - a.votes)
+      case 'ADD_ANCEDOTE':
+        const newAncedote = { content: action.data.content, id: getId(), votes: 0 }
+        return [...state, newAncedote]
       default:
         return state
     }
@@ -35,6 +37,15 @@ const reducer = (state = initialState, action) => {
 export const castVote = (content) => {
   return {
     type: 'CAST_VOTE',
+    data: {
+      content
+    }
+  }
+}
+
+export const addAncedote = (content) => {
+  return {
+    type: 'ADD_ANCEDOTE',
     data: {
       content
     }
