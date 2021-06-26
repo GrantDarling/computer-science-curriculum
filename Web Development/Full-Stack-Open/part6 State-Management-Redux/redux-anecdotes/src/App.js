@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { castVote, addAncedote } from './reducers/anecdoteReducer'
 import { addNotification } from './reducers/notificationReducer'
+import { initialize } from './reducers/anecdoteReducer'
 
 import Notification from './components/Notification'
 import anecdoteService from './services/anecdotes'
@@ -41,14 +42,9 @@ const AnecdoteForm = () => {
   const submitAncedote = async (event) => {
     event.preventDefault()
     const content = event.target.ancedote.value
-    const getId = () => (100000 * Math.random()).toFixed(0)
-    const newAncedote = { content: event.target.ancedote.value, id: getId(), votes: 0 }
-
     event.target.ancedote.value = ''
-    await anecdoteService.createNew(newAncedote)
-
-
-    dispatch(addAncedote(newAncedote))
+    await anecdoteService.createNew(content)
+    dispatch(addAncedote(content))
     dispatch(addNotification(content))
   }
 
@@ -64,10 +60,15 @@ const AnecdoteForm = () => {
 }
 
 const App = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(initialize())
+  }, [dispatch])
+
   return (
     <div>
-      <Notification />
       <h2>Anecdotes</h2>
+      <Notification />
       <AnecdoteList />
       <AnecdoteForm />
     </div>
