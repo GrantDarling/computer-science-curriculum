@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-  BrowserRouter as Router,
+  useRouteMatch,
   Switch,
   Route,
   Link
@@ -126,10 +126,14 @@ const App = () => {
     }
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
-  }
+    }
+
+    const match = useRouteMatch('/anecdote/:id')
+    const anecdote = match 
+      ? [anecdotes.find(anecdote => anecdote.id === match.params.id)]
+      : null
 
   return (
-    <Router>
       <div>
         <h1>Software anecdotes</h1>
         <Menu />
@@ -140,13 +144,15 @@ const App = () => {
           <Route path="/create">
             <CreateNew addNew={addNew} />
           </Route>
+          <Route path="/anecdote/:id">
+            <AnecdoteList anecdotes={anecdote} />
+          </Route>
           <Route path="/">
             <AnecdoteList anecdotes={anecdotes} />
           </Route>
         </Switch>
         <Footer />
       </div>
-    </Router>
   )
 }
 
